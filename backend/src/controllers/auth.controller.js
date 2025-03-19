@@ -54,7 +54,9 @@ const authSignIn=async (req,res)=>{
             res.status(401).json({message: "Missing Fields!!"})
             return ;
         }
-        const user=await User.findOne({email}).populate({path: 'projects'});
+        const user=await User.findOne({email}).populate({path: 'projects', populate: {
+            path: 'collaborators', select: 'fullName userName profilePic'
+        }});
         if(!user){
             res.status(401).json({message: "Invalid credentials!!"})
             return ;
