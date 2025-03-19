@@ -54,7 +54,7 @@ const authSignIn=async (req,res)=>{
             res.status(401).json({message: "Missing Fields!!"})
             return ;
         }
-        const user=await User.findOne({email});
+        const user=await User.findOne({email}).populate({path: 'projects'});
         if(!user){
             res.status(401).json({message: "Invalid credentials!!"})
             return ;
@@ -66,12 +66,12 @@ const authSignIn=async (req,res)=>{
         }
         generateToken(res,newUser._id)
         res.status(201).json({
-            fullName: newUser.fullName,
-            userName: newUser.userName,
-            email: newUser.email,
-            profilePic: newUser.profilePic,
-            projects: newUser.projects,
-            skills: newUser.skills,
+            fullName: user.fullName,
+            userName: user.userName,
+            email: user.email,
+            profilePic: user.profilePic,
+            projects: user.projects,
+            skills: user.skills,
         })
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});
