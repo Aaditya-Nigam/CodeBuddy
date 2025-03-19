@@ -64,7 +64,7 @@ const authSignIn=async (req,res)=>{
             res.status(401).json({message: "Invalid credentials!!"})
             return ;
         }
-        generateToken(res,newUser._id)
+        generateToken(res,user._id)
         res.status(201).json({
             fullName: user.fullName,
             userName: user.userName,
@@ -100,10 +100,20 @@ const authUpdateSkills=async (req,res)=>{
             return ;
         }
         await User.updateOne({_id: userId},{$push: {skills: skill}});
-        res.status(201).json({message: "Skill added successfully!!"});
+        const user=await User.findById(userId);
+        res.status(201).json(user);
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});
         console.log("error in update skills controller: ",error.message);
+    }
+}
+
+const authCheck=async (req,res)=>{
+    try {
+        res.status(201).json(req.user);
+    } catch (error) {
+        res.status(401).json({messgae: "Internal server error!!"})
+        console.log("error in check controller: ",error.message)
     }
 }
 
@@ -113,4 +123,5 @@ module.exports={
     authSignIn,
     authLogout,
     authUpdateSkills,
+    authCheck
 }
