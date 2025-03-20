@@ -112,7 +112,9 @@ const getProject=async (req,res)=>{
     try {
         const {id}=req.params
         const userId=req.user._id
-        const project=await Project.findOne({_id: id}).populate({path: 'collaborators', select: 'fullName userName profilePic'})
+        const project=await Project.findOne({_id: id})
+        .populate({path: 'collaborators', select: 'fullName userName profilePic'})
+        .populate({path: 'files', select :'fileName language'})
         if(!project){
             res.status(401).json({message: "Project doesn't exists!!"});
             return ;
