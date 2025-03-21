@@ -37,12 +37,12 @@ const getMessages=async (req,res)=>{
             res.status(401).json({message: "No such poject exists!!"});
             return ;
         }
-        if(!project.collaborators.include(userId)){
+        if(!project.collaborators.includes(userId)){
             res.status(401).json({message: "You are not a collaborator!!"});
             return ;
         }
         const messages=await Message.find({projectId: id})
-        res.status(201).json(messgaes)
+        res.status(201).json(messages)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});
         console.log("error in get message controller: ",error.message)

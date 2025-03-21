@@ -1,4 +1,5 @@
 const Project = require("../models/project.model")
+const File=require("../models/file.model")
 
 const createFile=async (req,res)=>{
     try {
@@ -14,7 +15,7 @@ const createFile=async (req,res)=>{
             res.status(401).json({message: "No such project exists!!"})
             return ;
         }
-        if(!project.collaborators.include(userId)){
+        if(!project.collaborators.includes(userId)){
             res.status(401).json({message: "No such project exists!!"})
             return ;
         }
@@ -26,6 +27,7 @@ const createFile=async (req,res)=>{
         })
         await newFile.save();
         await Project.updateOne({_id: id}, {$push: {files: newFile._id}})
+        res.status(201).json(newFile)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})
         console.log("error in create file controller: ",error.message)

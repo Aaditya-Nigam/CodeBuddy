@@ -14,7 +14,7 @@ const createTask=async (req,res)=>{
             res.status(401).json({message: "No such project exists!!"});
             return ;
         }
-        if(!project.collaborators.include(req.user._id)){
+        if(!project.collaborators.includes(req.user._id)){
             res.status(401).json({message: "No such project exists!!"});
             return ;
         }

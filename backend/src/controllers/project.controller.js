@@ -30,18 +30,19 @@ const createProject=async (req,res)=>{
 
 const joinProject=async (req,res)=>{
     try {
-        const id=req.params
+        const {id}=req.params
         const userId=req.user._id
         const project=await Project.findById(id);
         if(!project){
             res.status(401).json({message: "Invalid projectId!!"});
             return ;
         }
-        if(project.collaborators.include(userId)){
+        if(project.collaborators.includes(userId)){
             res.status(401).json({message: "Already the member of the project!!"});
             return ;
         }
         await Project.updateOne({_id: id}, {$push: {collaborators: userId}})
+        await User.updateOne({_id: userId}, {$push: {projects: id}})
         res.status(201).json(project)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})
