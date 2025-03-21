@@ -81,7 +81,7 @@ const deleteFile=async (req,res)=>{
             return ;
         }
         await File.findByIdAndDelete(id);
-        await Project.updateOne({_id: projectId}, {$push: {files: id}});
+        await Project.updateOne({_id: projectId}, {$pull: {files: id}});
         res.status(201).json({message: "File deleted!!"})
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});

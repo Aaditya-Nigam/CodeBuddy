@@ -5,6 +5,7 @@ const connectDB = require("./lib/mongo")
 const authRouter=require("./routers/auth.router")
 const projectRouter=require("./routers/project.router")
 const messageRouter=require("./routers/message.router")
+const fileRouter=require("./routers/file.router")
 dotenv.config()
 
 const app=express()
@@ -14,6 +15,7 @@ app.use(cookieParser())
 app.use("/api/auth",authRouter)
 app.use("/api/project",projectRouter)
 app.use("/api/message",messageRouter)
+app.use("/api/file",fileRouter)
 
 const PORT=process.env.PORT
 app.listen(PORT,()=>{
