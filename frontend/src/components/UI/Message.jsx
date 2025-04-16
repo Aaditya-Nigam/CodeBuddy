@@ -1,17 +1,28 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useMessgageStore } from "../../store/useMessageStore"
 import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast"
 
 export const Message=({showMessage,setShowMessage,id})=>{
 
-    const {messages,isLoadingMessage,loadMessages,isSendingMessage,sendMessage}=useMessgageStore()
-    const {authUser}=useAuthStore()
+    const {messages,isLoadingMessage,loadMessages,isSendingMessage,sendMessage,subscribeToMessages}=useMessgageStore()
+    const {authUser,socket}=useAuthStore()
     const [msg,setMsg]=useState("");
     const [reload,setReload]=useState(false)
+    const messageContainer=useRef(null);
+
+
+    useEffect(()=>{
+        const container=messageContainer.current;
+        if(container){
+            container.scrollTop=container.scrollHeight;
+        }
+    },[messages])
 
     useEffect(()=>{
         loadMessages(id)
+        socket.emit('join-room',id);
+        subscribeToMessages();
     },[reload,id])
 
     if(isLoadingMessage){
@@ -45,7 +56,7 @@ export const Message=({showMessage,setShowMessage,id})=>{
     return (
         <main className={`bg-[#000000ee] fixed top-0 w-screen h-screen flex items-center justify-center ${showMessage?'':'hidden'}`} onClick={()=> setShowMessage(false)}>
             <div className="w-[1000px] border-4 rounded-lg h-[600px] border-green-900 text-white grid grid-rows-[15fr_1fr] bg-black" onClick={(e)=> e.stopPropagation()}>
-                <div className="overflow-auto messageContainer p-2 flex flex-col gap-2">
+                <div className="overflow-auto messageContainer p-2 flex flex-col gap-2" ref={messageContainer}>
                     {
                         messages.map((msg,idx)=>{
                             return (

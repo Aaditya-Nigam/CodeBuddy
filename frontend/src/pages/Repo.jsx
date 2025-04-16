@@ -24,7 +24,7 @@ export const Repo=()=>{
 
     const {id}=useParams()
     const {isLoading,project,loadProject,deleteFile,isCreatingProject,deleteTask,completeTask}=useProjectStore()
-    const {authUser}=useAuthStore()
+    const {authUser,socket}=useAuthStore()
     const [showCreate,setShowCreate]=useState(false);
     const [copy,setCopy]=useState(false)
     const [showTasks,setShowTasks]=useState(true)

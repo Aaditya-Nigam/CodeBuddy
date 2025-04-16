@@ -3,6 +3,7 @@ import { axiosInstance } from "../lib/axios"
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useProjectStore } from "./useProjectStore";
+import { io } from "socket.io-client"
 
 
 export const useAuthStore=create((set,get)=>({
@@ -12,6 +13,7 @@ export const useAuthStore=create((set,get)=>({
     isLoggingIn: false,
     isCreatingProject: false,
     isJoiningProject: false,
+    socket: null,
 
     signup: async(user)=>{
         set({isSigningUp: true})
@@ -20,6 +22,7 @@ export const useAuthStore=create((set,get)=>({
             set({authUser: res.data})
             toast.success("Successfully signed up!!")
             set({isSigningUp: false})
+            get().connectSocket();
             return true;
         } catch (error) {
             set({authUser: null})
@@ -37,6 +40,7 @@ export const useAuthStore=create((set,get)=>({
             set({authUser: res.data});
             toast.success("successfully logged in!!")
             set({isLoggingIn: false})
+            get().connectSocket();
             return true;
         } catch (error) {
             toast.error(error.message)
@@ -50,6 +54,7 @@ export const useAuthStore=create((set,get)=>({
             const res=await axiosInstance.post("/auth/logout")
             const data=res.data;
             set({authUser: null});
+            get().disconnectSocket();
             toast.success(data.message);
         } catch (error) {
             toast.error(error.message)
@@ -59,7 +64,8 @@ export const useAuthStore=create((set,get)=>({
     check: async()=>{
         try {
             const res=await axiosInstance.get("/auth/check")
-            set({authUser: res.data});
+            set({authUser: res.data})
+            get().connectSocket();;
         } catch (error) {
             set({authUser: null});
         }finally{
@@ -112,6 +118,32 @@ export const useAuthStore=create((set,get)=>({
             set({authUser: authUser})
         }catch(error){
             toast.error(error.response.data.message)
+        }
+    },
+
+    connectSocket: ()=>{
+        try {
+            const authUser=get().authUser
+            if(!authUser || get().socket?.connected){
+                return ;
+            }
+            const socket=io("http://localhost:5000")
+            socket.connect();
+            set({socket: socket})
+        } catch (error) {
+            console.log("error in connect socket: ",error.message)
+        }
+    },
+
+    disconnectSocket: ()=>{
+        try {
+            if(!get().socket?.connected){
+                return ;
+            }
+            get().socket.disconnect();
+            set({socket: null});
+        } catch (error) {
+            console.log("error in connect socket: ",error.message)
         }
     }
 }))

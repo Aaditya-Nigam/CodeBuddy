@@ -8,9 +8,8 @@ const projectRouter=require("./routers/project.router")
 const messageRouter=require("./routers/message.router")
 const fileRouter=require("./routers/file.router")
 const taskRouter=require("./routers/task.router")
+const {app,server}=require("./lib/socket");
 dotenv.config()
-
-const app=express()
 
 app.use(express.json())
 app.use(cookieParser())
@@ -25,7 +24,7 @@ app.use("/api/file",fileRouter)
 app.use("/api/task",taskRouter)
 
 const PORT=process.env.PORT
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`server running at port no. ${PORT}`)
     connectDB()
 })

@@ -1,3 +1,4 @@
+const { io } = require("../lib/socket");
 const Message = require("../models/message.model");
 const Project = require("../models/project.model");
 
@@ -21,6 +22,7 @@ const sendMessage=async (req,res)=>{
             projectId: id
         })
         await newMessage.save();
+        io.to(id).emit("newMessage",newMessage)
         res.status(201).json(newMessage)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})

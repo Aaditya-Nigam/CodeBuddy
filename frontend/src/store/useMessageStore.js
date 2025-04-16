@@ -1,6 +1,7 @@
 import toast from "react-hot-toast"
 import { axiosInstance } from "../lib/axios"
 import { create } from "zustand"
+import { useAuthStore } from "./useAuthStore"
 
 export const useMessgageStore=create((set,get)=>({
     messages: null,
@@ -33,6 +34,20 @@ export const useMessgageStore=create((set,get)=>({
             console.log(error)
         }finally{
             set({isSendingMessage: false})
+        }
+    },
+
+    subscribeToMessages: ()=>{
+        try {
+            const socket=useAuthStore.getState().socket;
+            console.log(`${socket.id} subscribed to msg`)
+            socket.off('newMessage')
+            socket.on('newMessage',(msg)=>{
+                console.log(msg);
+                set({messages: [...get().messages,msg]});
+            })
+        } catch (error) {
+            console.log(error);
         }
     }
 }))
