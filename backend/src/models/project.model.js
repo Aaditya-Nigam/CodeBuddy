@@ -21,7 +21,7 @@ const projectSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'File'
     }]
-})
+},{timestamps: true})
 
 const Project=new mongoose.model('Project',projectSchema);
 module.exports=Project

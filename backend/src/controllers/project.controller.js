@@ -17,10 +17,10 @@ const createProject=async (req,res)=>{
         const newProject=new Project({
             projectName,
             author: req.user._id,
+            collaborators: [req.user._id]
         })
-        newProject.save();
-        await Project.updateOne({_id: newProject._id}, {$push: {collaborators: req.user._id}})
         await User.updateOne({_id: req.user._id}, {$push: {projects: newProject._id}})  
+        newProject.save();
         res.status(201).json(newProject);
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})
@@ -32,17 +32,18 @@ const joinProject=async (req,res)=>{
     try {
         const {id}=req.params
         const userId=req.user._id
-        const project=await Project.findById(id);
+        let project=await Project.findById(id);
         if(!project){
             res.status(401).json({message: "Invalid projectId!!"});
             return ;
         }
         if(project.collaborators.includes(userId)){
-            res.status(401).json({message: "Already the member of the project!!"});
+            res.status(401).json(project);
             return ;
         }
         await Project.updateOne({_id: id}, {$push: {collaborators: userId}})
         await User.updateOne({_id: userId}, {$push: {projects: id}})
+        project=await Project.findById(id);
         res.status(201).json(project)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})
@@ -115,7 +116,8 @@ const getProject=async (req,res)=>{
         const userId=req.user._id
         const project=await Project.findOne({_id: id})
         .populate({path: 'collaborators', select: 'fullName userName profilePic'})
-        .populate({path: 'files', select :'fileName language'})
+        .populate({path: 'files'})
+        .populate({path: 'tasks'})
         if(!project){
             res.status(401).json({message: "Project doesn't exists!!"});
             return ;

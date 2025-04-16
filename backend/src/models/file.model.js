@@ -17,7 +17,7 @@ const fileSchema=new mongoose.Schema({
         ref: 'Project',
         required: true
     }
-})
+},{timestamps: true})
 
 const File=new mongoose.model('File', fileSchema)
 module.exports=File

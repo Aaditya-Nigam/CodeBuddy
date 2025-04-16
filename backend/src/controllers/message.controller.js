@@ -45,7 +45,7 @@ const getMessages=async (req,res)=>{
         res.status(201).json(messages)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});
-        console.log("error in get message controller: ",error.message)
+        console.log("error in get message controller: ",error)
     }
 }
 

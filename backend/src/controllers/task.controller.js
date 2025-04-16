@@ -25,8 +25,8 @@ const createTask=async (req,res)=>{
             projectId: id
         })
         await newTask.save()
-        await Project.updateOne({_id: id}, {$push: {taks: newTask._id}})
-        res.status(201).json(newtask)
+        await Project.updateOne({_id: id}, {$push: {tasks: newTask._id}})
+        res.status(201).json(newTask)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});
         console.log("error in create task controller: ",error.message) ;
@@ -90,9 +90,36 @@ const deleteTask=async (req,res)=>{
     }
 }
 
+const completeTask=async(req,res)=>{
+    try {
+        const {id}=req.params;
+        const task=await Task.findById(id);
+        if(!task){
+            res.status(401).json({message: "No such task exists!!"});
+            return ;
+        }
+        let updatedTask;
+        if(task.completed){
+            updatedTask=await Task.findByIdAndUpdate(id, {completed: false},{new:true})
+        }else{
+            updatedTask=await Task.findByIdAndUpdate(id, {completed: true},{new:true})
+        }
+        if(!updatedTask){
+            res.status(401).json({message: "Internal server error!!"});
+            return ;
+        }
+        res.status(201).json(updatedTask)
+    } catch (error) {
+        res.status(401).json({message: "Internal server error!!"});
+        console.log("error in create task controller: ",error.message) ;
+    }
+
+}
+
 module.exports={
     createTask,
     updateTask,
     getTask,
-    deleteTask
+    deleteTask,
+    completeTask
 }

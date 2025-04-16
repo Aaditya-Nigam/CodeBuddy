@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { Home } from "./pages/Home"
+import { Projects } from "./pages/Projects"
+import { Profile } from "./pages/Profile"
+import { AppLayout } from "./components/layout/AppLayout"
+import { SignUp } from "./pages/SignUp"
+import { Login } from "./pages/Login"
+import { useAuthStore } from "./store/useAuthStore"
+import { useEffect } from "react"
+import { Repo } from "./pages/Repo"
+import { File } from "./pages/File"
 
-function App() {
-  const [count, setCount] = useState(0)
+export const App=()=>{
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  const {check,authUser,isCheckingAuth}=useAuthStore();
+  useEffect(()=>{
+    check();
+  },[check])
+
+  if(isCheckingAuth && !authUser){
+    return <h1>Loading...</h1>
+  }
+
+  const router=createBrowserRouter(
+    [
+      {
+        path: "/signUp",
+        element: <SignUp/>
+      },
+      {
+        path: "/login",
+        element: <Login/>
+      },
+      {
+        path: "/",
+        element: <AppLayout/>,
+        children: [
+          {
+            path: "/",
+            element: <Home/>
+          },
+          {
+            path: "/projects",
+            element: <Projects/>
+          },
+          {
+            path: "/profile",
+            element: <Profile/>
+          },
+          {
+            path: "/projects/:id",
+            element: <Repo/>
+          },
+          {
+            path: "/projects/:projectId/:fileId/:index",
+            element: <File/>
+          }
+        ]
+      }
+    ]
   )
-}
 
-export default App
+  return <RouterProvider router={router}></RouterProvider>
+}

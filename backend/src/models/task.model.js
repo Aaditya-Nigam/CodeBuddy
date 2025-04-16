@@ -20,7 +20,7 @@ const taskSchema=new mongoose.Schema({
         type: Boolean,
         default: false
     }
-})
+},{timestamps: true})
 
 const Task=new mongoose.model('Task', taskSchema)
 module.exports=Task
