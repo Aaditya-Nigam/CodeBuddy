@@ -4,7 +4,7 @@ import { useProjectStore } from "../../store/useProjectStore"
 
 export const NewFile=({showCreate,setShowCreate})=>{
 
-    const {createFile}=useProjectStore()
+    const {createFile,isCreatingFile}=useProjectStore()
     const [file,setFile]=useState({
         fileName: "",
         language: "cpp",
@@ -47,12 +47,11 @@ export const NewFile=({showCreate,setShowCreate})=>{
                             <label htmlFor="language" className="text-sm">Language</label>
                             <select name="language" id="language" className="bg-zinc-800 w-[300px] border-1 border-zinc-500 rounded px-2 py-1 text-sm" value={file.language} onChange={(e)=> setFile({...file, [e.target.name]: e.target.value})}>
                                 <option value="cpp">Cpp</option>
-                                <option value="java">Java</option>
-                                <option value="js">JavaScript</option>
-                                <option value="py">Python</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="python">Python</option>
                             </select>
                         </div>
-                        <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 w-[300px] border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer"/>
+                        <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 w-[300px] border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer" disabled={isCreatingFile}/>
                     </form>
                 </div>
             </div>

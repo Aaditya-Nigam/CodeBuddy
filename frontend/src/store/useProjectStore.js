@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 export const useProjectStore=create((set,get)=>({
     isLoading: true,
     project: null,
+    isCreatingFile:false,
+    isCreatingTask: false,
 
     loadProject: async(id)=>{
         try{
@@ -20,6 +22,7 @@ export const useProjectStore=create((set,get)=>({
     },
 
     createFile: async(formData)=>{
+        set({isCreatingFile: true});
         try {
             const project=get().project
             const res=await axiosInstance.post(`/file/create/${project._id}`,formData)
@@ -29,6 +32,8 @@ export const useProjectStore=create((set,get)=>({
         } catch (error) {
             toast.error(error.response?.data.message)
             console.log(error)
+        }finally{
+            set({isCreatingFile: false});
         }
     },
 
@@ -79,6 +84,7 @@ export const useProjectStore=create((set,get)=>({
     },
 
     createTask: async(task,id)=>{
+        set({isCreatingTask: true})
         try {
             const project=get().project;
             const res=await axiosInstance.post(`/task/newtask/${id}`,task)
@@ -88,6 +94,8 @@ export const useProjectStore=create((set,get)=>({
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(error);
+        }finally{
+            set({isCreatingTask: false})
         }
     }
 }))

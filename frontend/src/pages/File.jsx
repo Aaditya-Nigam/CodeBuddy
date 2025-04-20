@@ -3,6 +3,7 @@ import { useProjectStore } from "../store/useProjectStore";
 import { RxAvatar } from "react-icons/rx";
 import { useEffect, useRef } from "react";
 import { Editor } from "../components/UI/Editor";
+import { Loader } from "../components/UI/Loader";
 
 export const File = () => {
   const { project, loadProject } = useProjectStore();
@@ -17,12 +18,12 @@ export const File = () => {
   }, [projectId, loadProject]);
 
   if (!project) {
-    return <h1>Loading...</h1>;
+    return <Loader/>;
   }
 
   return (
-    <div className="bg-[#0d1117] h-[91.7vh] grid grid-cols-[1fr_4fr]">
-      <div className="text-white px-4 border-r-2 border-[#1e232795]">
+    <div className="bg-[#0d1117] h-[91.7vh] grid grid-cols-[1fr_4fr] max-[700px]:block">
+      <div className="text-white px-4 border-r-2 border-[#1e232795] max-[700px]:hidden">
         <h1 className="text-md border-b-2 py-2 border-[#1e232795] mx-4">Collaborators</h1>
         <div className="flex flex-col gap-3 py-4">
           {project?.collaborators?.length > 0 ? (

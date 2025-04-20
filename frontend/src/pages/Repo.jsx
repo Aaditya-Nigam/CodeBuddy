@@ -19,6 +19,7 @@ import { NewTask } from "../components/UI/NewTask";
 import { Message } from "../components/UI/Message";
 import { TbMessage2Filled } from "react-icons/tb";
 import { FaStar } from "react-icons/fa6";
+import { Loader } from "../components/UI/Loader";
 
 export const Repo=()=>{
 
@@ -30,14 +31,13 @@ export const Repo=()=>{
     const [showTasks,setShowTasks]=useState(true)
     const [showNewTasks,setShowNewTasks]=useState(false)
     const [showMessage,setShowMessage]=useState(false)
-    console.log(project)
     
     useEffect(()=>{
         loadProject(id);
     },[id])
 
     if(isLoading && !project){
-        return <h1>Loading..</h1>
+        return <Loader/>
     }
 
     const handleCopyId=async(projectId)=>{
@@ -56,9 +56,9 @@ export const Repo=()=>{
     return (
         <>
             <main className="bg-[#0d1117] h-[91.7vh]">
-                <div className="w-[80%] mx-auto h-full grid grid-cols-[1fr_4fr] p-2">
+                <div className="w-[80%] mx-auto h-full grid grid-cols-[1fr_3fr] p-2 max-[900px]:block">
                     {/* left */}
-                    <div className="flex flex-col gap-4 border-r-2 border-[#1e232795] px-2 w-full overflow-hidden">
+                    <div className="flex flex-col gap-4 border-r-2 border-[#1e232795] p-2 w-full overflow-hidden max-[900px]:hidden">
                         <div className="text-white flex flex-col gap-2  py-2 w-full">
                             <h1 className="text-xl border-b-2 py-2 border-[#1e232795] mx-4">Collaborators</h1>
                             <div className="flex flex-col gap-3 mx-2">
@@ -114,20 +114,20 @@ export const Repo=()=>{
 
 
                     {/* right */}
-                    <div className="fileContainer py-4 px-8 text-white overflow-auto">
-                        <div className="flex gap-4 items-center">
-                            <h1 className="text-2xl underline">{project.projectName}</h1>
-                            <div className="flex gap-8 items-center bg-[#1e2327] px-2 py-1 border-1 border-zinc-700 rounded">
-                                <p className="text-sm">{project._id}</p>
+                    <div className="fileContainer py-4 px-8 w-full text-white overflow-auto">
+                        <div className="flex gap-4 items-center max-[520px]:flex-col">
+                            <h1 className="text-2xl underline max-[700px]:text-xl">{project.projectName}</h1>
+                            <div className="flex gap-8 items-center bg-[#1e2327] px-2 py-1 border-1 border-zinc-700 rounded max-[700px]:gap-4">
+                                <p className="text-sm max-[700px]:text-xs">{project._id}</p>
                                 {
-                                    copy?<LuCopyCheck className="text-sm cursor-pointer text-green-600"/>:<FaRegCopy className="text-sm cursor-pointer" onClick={()=>handleCopyId(project._id)}/>
+                                    copy?<LuCopyCheck className="text-sm cursor-pointer text-green-600 max-[700px]:text-xs"/>:<FaRegCopy className="text-sm cursor-pointer max-[700px]:text-xs" onClick={()=>handleCopyId(project._id)}/>
                                 }
                             </div>
-                            <TbMessage2Filled className="text-xl cursor-pointer" onClick={()=> setShowMessage(true)}/>
+                            <TbMessage2Filled className="text-xl cursor-pointer max-[700px]:text-base max-[600px]:hidden" onClick={()=> setShowMessage(true)}/>
                         </div>
-                        <div className="flex gap-4 justifycenter py-4">
+                        <div className="grid grid-cols-[10fr_1fr] gap-4 justifycenter py-4">
                             <form>
-                                <input type="text" name="file" id="file" placeholder="Find files.." className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm"/>    
+                                <input type="text" name="file" id="file" placeholder="Find files.." className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm w-full"/>    
                             </form>
                             <button className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer" onClick={()=> setShowCreate(true)}>New</button>    
                         </div> 

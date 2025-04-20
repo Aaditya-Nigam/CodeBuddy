@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror"; 
 import { python } from "@codemirror/lang-python";
+import { javascript } from "@codemirror/lang-javascript";
+import { cpp } from "@codemirror/lang-cpp";
 import { basicSetup } from "codemirror"; 
 import { useFileStore } from "../../store/useFileStore";
 import toast, { Toaster } from "react-hot-toast";
@@ -38,6 +40,18 @@ export const Editor = ({ fileId }) => {
     }
   }
 
+  const langReq=(str)=>{
+    if(str==='python'){
+      return python();
+    }
+    if(str==='cpp'){
+      return cpp();
+    }
+    if(str==='javascript'){
+      return javascript();
+    }
+  }
+
   return (
     <>
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
@@ -46,7 +60,7 @@ export const Editor = ({ fileId }) => {
       </div>
       <CodeMirror
         value={code}
-        extensions={[python(), basicSetup]}
+        extensions={[langReq(file.language), basicSetup]}
         onChange={(val) => setCode(val)}
         theme="dark"
         />

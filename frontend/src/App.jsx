@@ -9,6 +9,7 @@ import { useAuthStore } from "./store/useAuthStore"
 import { useEffect } from "react"
 import { Repo } from "./pages/Repo"
 import { File } from "./pages/File"
+import { Loader } from "./components/UI/Loader"
 
 export const App=()=>{
 
@@ -18,7 +19,7 @@ export const App=()=>{
   },[check])
 
   if(isCheckingAuth && !authUser){
-    return <h1>Loading...</h1>
+    return <Loader/>
   }
 
   const router=createBrowserRouter(

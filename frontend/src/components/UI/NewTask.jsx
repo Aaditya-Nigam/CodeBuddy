@@ -4,7 +4,7 @@ import { useProjectStore } from "../../store/useProjectStore"
 
 export const NewTask=({showNewTasks,setShowNewTasks,collaborators,id})=>{
 
-    const {createTask}=useProjectStore()
+    const {createTask,isCreatingTask}=useProjectStore()
     const [task,setTask]=useState({
         title: "",
         author: "",
@@ -66,7 +66,7 @@ export const NewTask=({showNewTasks,setShowNewTasks,collaborators,id})=>{
                             <label htmlFor="deadline" className="text-sm">Deadline</label>
                             <input type="date" name="deadline" id="deadline" value={task.deadline} onChange={(e)=> setTask({...task, [e.target.name]: e.target.value})} className="bg-zinc-800 w-[300px] border-1 border-zinc-500 rounded px-2 py-1 text-sm" required/>
                         </div>
-                        <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 w-[300px] border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer"/>
+                        <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 w-[300px] border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer" disabled={isCreatingTask}/>
                     </form>
                 </div>
             </div>

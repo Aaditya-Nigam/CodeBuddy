@@ -40,10 +40,8 @@ export const useMessgageStore=create((set,get)=>({
     subscribeToMessages: ()=>{
         try {
             const socket=useAuthStore.getState().socket;
-            console.log(`${socket.id} subscribed to msg`)
             socket.off('newMessage')
             socket.on('newMessage',(msg)=>{
-                console.log(msg);
                 set({messages: [...get().messages,msg]});
             })
         } catch (error) {

@@ -17,11 +17,6 @@ io.on('connection',(socket)=>{
 
     socket.on('join-room',(id)=>{
         socket.join(id)
-        console.log(`user connected to room: ${id}`)
-    })
-
-    socket.on('disconnect',()=>{
-        console.log(`User disconnected: `,socket.id)
     })
 })
 
