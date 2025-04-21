@@ -26,10 +26,12 @@ app.use("/api/message",messageRouter)
 app.use("/api/file",fileRouter)
 app.use("/api/task",taskRouter)
 
-app.use(express.static(path.join(_dirname,"/frontend/dist")))
-app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
-})
+if(process.env.NODE_ENV==="production"){
+    app.use(express.static(path.join(_dirname,"../frontend/dist")))
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(_dirname,"../frontend","dist","index.html"))
+    })
+}
 
 const PORT=process.env.PORT
 server.listen(PORT,()=>{

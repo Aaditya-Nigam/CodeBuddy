@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
 import { useProjectStore } from "../store/useProjectStore"
 import { useEffect, useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
@@ -31,6 +31,12 @@ export const Repo=()=>{
     const [showTasks,setShowTasks]=useState(true)
     const [showNewTasks,setShowNewTasks]=useState(false)
     const [showMessage,setShowMessage]=useState(false)
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!authUser){
+            navigate("/login")
+        }
+    },[authUser])
     
     useEffect(()=>{
         loadProject(id);

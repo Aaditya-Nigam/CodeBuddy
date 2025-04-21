@@ -1,13 +1,23 @@
 import { Toaster } from "react-hot-toast"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { FcCollaboration } from "react-icons/fc";
 import { PiChatsBold } from "react-icons/pi";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import { GiThreeFriends } from "react-icons/gi";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { FaTasks } from "react-icons/fa";
+import { useEffect } from "react";
+import { useAuthStore } from "../store/useAuthStore"
 
 export const Home=()=>{
+    const {authUser}=useAuthStore()
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!authUser){
+            navigate("/login")
+        }
+    },[authUser])
+
     return (
         <main className="bg-[#0d1117] min-h-[91.7vh] text-white">
             <div className="h-full mx-auto">

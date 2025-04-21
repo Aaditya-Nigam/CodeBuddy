@@ -1,8 +1,8 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useAuthStore } from "../store/useAuthStore"
 import moment, {} from "moment"
 import { NewProject } from "../components/UI/NewProject"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MdDelete } from "react-icons/md";
 import { Toaster } from "react-hot-toast"
 import { JoinProject } from "../components/UI/JoinProject"
@@ -12,6 +12,12 @@ export const Projects=()=>{
     const {authUser,deleteProject}=useAuthStore()
     const [showProject,setShowProject]=useState(false);
     const [showJoin,setShowJoin]=useState(false);
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!authUser){
+            navigate("/login")
+        }
+    },[authUser])
     
     return (
         <>
