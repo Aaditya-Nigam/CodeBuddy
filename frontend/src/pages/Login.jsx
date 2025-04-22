@@ -49,28 +49,28 @@ export const Login=()=>{
 
     return (
         <div className="w-screen h-screen bg-black flex items-center justify-center text-white">
-            <div className="w-[500px] p-4 rounded-xl">
+            <div className="w-[500px] p-4 rounded-xl max-[500px]:w-[300px]">
                 <div className="flex justify-center p-2">
                     <img src="./logo_short.jpg" alt="" className=" h-[60px] rounded-xl border-1 border-zinc-700"/>
                 </div>
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleFormSubmit} className="flex flex-col items-center">
                     <div className="flex flex-col justify-center items-center gap-1">
-                        <h1 className="text-2xl">Create Account</h1>
-                        <p className="text-md">Get started with your free account</p>
+                        <h1 className="text-2xl max-[500px]:text-lg">Create Account</h1>
+                        <p className="text-md max-[500px]:text-sm">Get started with your free account</p>
                     </div>
-                    <div className="py-8 flex flex-col items-center gap-4">
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="email" className="text-zinc-400">Email</label>
-                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-[400px] outline-none">
+                    <div className="py-8 flex flex-col items-center gap-4 w-full min-[500px]:w-[400px]">
+                        <div className="flex flex-col gap-1 w-full">
+                            <label htmlFor="email" className="text-zinc-400 max-[500px]:text-sm">Email</label>
+                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none">
                                 <MdOutlineEmail className="text-lg"/>
-                                <input type="email" name="email" id="email" value={user.email} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="aaditya@email.com" className="w-full outline-none"/>
+                                <input type="email" name="email" id="email" value={user.email} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="aaditya@email.com" className="w-full outline-none max-[500px]:text-sm"/>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="password" className="text-zinc-400">Password</label>
-                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-[400px] outline-none">
+                        <div className="flex flex-col gap-1 w-full">
+                            <label htmlFor="password" className="text-zinc-400 max-[500px]:text-sm">Password</label>
+                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none">
                                 <TbLockPassword className="text-lg"/>
-                                <input type={showPassword?"text":"password"} name="password" id="password" value={user.password} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="********" className="w-full outline-none"/>
+                                <input type={showPassword?"text":"password"} name="password" id="password" value={user.password} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="********" className="w-full outline-none max-[500px]:text-sm"/>
                                 {
                                     showPassword?
                                     <FaEyeSlash className="text-lg cursor-pointer" onClick={()=> setShowPassword(!showPassword)}/>:
@@ -78,9 +78,9 @@ export const Login=()=>{
                                 }   
                             </div>
                         </div>
-                        <div className="w-[400px] flex flex-col gap-2 items-center">
-                            <input type="submit" value="Login" className="bg-sky-500 w-full py-1 text-xl rounded-lg cursor-pointer hover:bg-sky-600 my-2"/>
-                            <p>Don't have an account? <NavLink to="/signup" className="text-sky-400 hover:text-sky-600 hover:underline">Sign Up</NavLink></p>
+                        <div className="w-full flex flex-col gap-2 items-center">
+                            <input type="submit" value="Login" className="bg-sky-500 w-full py-1 text-xl rounded-lg cursor-pointer hover:bg-sky-600 my-2 max-[500px]:text-base"/>
+                            <p className="max-[500px]:text-sm">Don't have an account? <NavLink to="/signup" className="text-sky-400 hover:text-sky-600 hover:underline ">Sign Up</NavLink></p>
                         </div>
                     </div>
                 </form>
