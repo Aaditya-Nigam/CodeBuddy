@@ -12,12 +12,30 @@ export const Projects=()=>{
     const {authUser,deleteProject}=useAuthStore()
     const [showProject,setShowProject]=useState(false);
     const [showJoin,setShowJoin]=useState(false);
+    const [projects,setProjects]=useState([]);
     const navigate=useNavigate();
     useEffect(()=>{
         if(!authUser){
             navigate("/login")
         }
     },[authUser])
+
+    useEffect(()=>{
+        if(authUser){
+            setProjects(authUser.projects)
+        }
+    },[])
+
+    console.log(projects)
+
+    const handleProjectSearch=(e)=>{
+        console.log(e.target.value)
+        const updatedList=authUser.projects.filter((project)=>{
+            return project.projectName.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+        setProjects(updatedList)
+        console.log(updatedList)
+    }
     
     return (
         <>
@@ -34,7 +52,7 @@ export const Projects=()=>{
                     <div className="project-container p-4 overflow-y-auto">
                         <div className="grid grid-cols-[10fr_2fr] gap-4 justify-center px-2 max-[500px]:flex max-[500px]:flex-col max-[500px]:gap-2">
                             <form>
-                                <input type="text" name="project" id="project" placeholder="Find a project.." className="bg-[#1e2327] placeholder-zinc-600 text-zinc-600 px-2 py-0.5 text-sm outline-none w-full border-1 border-zinc-800 rounded"/>
+                                <input type="text" name="project" id="project" placeholder="Find a project.." onChange={handleProjectSearch} className="bg-[#1e2327] placeholder-zinc-600 text-zinc-600 px-2 py-0.5 text-sm outline-none w-full border-1 border-zinc-800 rounded"/>
                             </form>
                             <div className="flex gap-2">
                                 <button className="bg-sky-600 px-4 rounded-xl text-white" onClick={()=> setShowProject(true)}>New</button>
@@ -43,7 +61,7 @@ export const Projects=()=>{
                         </div>
                         <div className="py-8 px-16 flex flex-col gap-2 items-center">
                             {
-                                authUser?.projects.map((project,index)=>{
+                                projects.map((project,index)=>{
                                     return (
                                         <div key={index} className="bg-[#1e232765] px-4 py-2 border-2 rounded-lg border-[#1e2327] flex justify-between items-center w-full max-[430px]:w-[200px]">
                                             <div>
@@ -61,6 +79,9 @@ export const Projects=()=>{
                                         </div>
                                     )
                                 })
+                            }
+                            {
+                                projects.length==0?<p className="text-zinc-700 w-full">No projects found!</p>:""
                             }
                             
                         </div>

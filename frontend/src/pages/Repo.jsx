@@ -31,6 +31,7 @@ export const Repo=()=>{
     const [showTasks,setShowTasks]=useState(true)
     const [showNewTasks,setShowNewTasks]=useState(false)
     const [showMessage,setShowMessage]=useState(false)
+    const [files,setFiles]=useState([]);
     const navigate=useNavigate();
     useEffect(()=>{
         if(!authUser){
@@ -41,6 +42,12 @@ export const Repo=()=>{
     useEffect(()=>{
         loadProject(id);
     },[id])
+
+    useEffect(()=>{
+        if(project){
+            setFiles(project.files)
+        }
+    },[project])
 
     if(isLoading && !project){
         return <Loader/>
@@ -57,6 +64,13 @@ export const Repo=()=>{
         } catch (error) {
             console.log("Fail in copy: ",error.message)
         }
+    }
+
+    const handleFileSearch=(e)=>{
+        const updatedList=project.files.filter((file)=>{
+            return file.fileName.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+        setFiles(updatedList)
     }
 
     return (
@@ -133,13 +147,13 @@ export const Repo=()=>{
                         </div>
                         <div className="grid grid-cols-[10fr_1fr] gap-4 justifycenter py-4">
                             <form>
-                                <input type="text" name="file" id="file" placeholder="Find files.." className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm w-full"/>    
+                                <input type="text" name="file" id="file" placeholder="Find files.." onChange={handleFileSearch} className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm w-full"/>    
                             </form>
                             <button className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer" onClick={()=> setShowCreate(true)}>New</button>    
                         </div> 
                         <div className="py-4 flex flex-col gap-2">
                             {
-                                project.files.map((file,index)=>{
+                                files.map((file,index)=>{
                                     return (
                                         <div key={index} className="bg-[#1e2327] px-4 py-2 rounded-lg flex justify-between items-center">
                                             <div>
@@ -152,6 +166,9 @@ export const Repo=()=>{
                                         </div>
                                     )
                                 })
+                            }
+                            {
+                                files.length==0?<p className="text-zinc-700">No file found!</p>:""
                             }
                         </div>
                     </div>
