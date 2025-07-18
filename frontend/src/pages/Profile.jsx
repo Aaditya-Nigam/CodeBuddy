@@ -13,7 +13,7 @@ export const Profile=()=>{
         }
     },[authUser])
     return (
-        <main className="bg-[#0d1117] h-[91.7vh]">
+        <main className="bg-[#0d1117] min-h-[91.7vh]">
             <div className="w-[80%] mx-auto h-full py-12 ">
                 <div className="flex flex-col items-center gap-4 ">
                     <img src={authUser?.profilePic || "./avatar.png"} alt="" className="w-[200px] border-4 border-sky-600 rounded-[50%] max-[650px]:w-[100px]"/>
