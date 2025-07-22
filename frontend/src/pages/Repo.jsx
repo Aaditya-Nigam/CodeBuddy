@@ -154,10 +154,10 @@ export const Repo=()=>{
                         <div className="py-4 flex flex-col gap-2">
                             {
                                 files.map((file,index)=>{
-                                    return (
+                                    return ( 
                                         <div key={index} className="bg-[#1e2327] px-4 py-2 rounded-lg flex justify-between items-center">
                                             <div>
-                                                <NavLink to={`${file._id}/${index}`} className="text-md">{file.fileName?.split('.')[0]}&nbsp;&nbsp;<span className="text-xs text-zinc-700">{moment(file.createdAt).fromNow()}</span></NavLink>
+                                                <NavLink to={`/projects/${project._id}/${file._id}/${index}`} className="text-md">{file.fileName?.split('.')[0]}&nbsp;&nbsp;<span className="text-xs text-zinc-700">{moment(file.createdAt).fromNow()}</span></NavLink>
                                                 <p className="text-sm text-zinc-400">Language: <span className="text-zinc-600">{file.language}</span></p>
                                             </div>
                                             <div>
