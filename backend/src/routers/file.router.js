@@ -3,7 +3,7 @@ const protectedRoute = require("../middleware/auth.middleware")
 const { createFile, updateFile, getFile, deleteFile } = require("../controllers/file.controller")
 const router=express.Router()
 
-router.post("/create/:id",protectedRoute,createFile)
+router.post("/createFile",protectedRoute,createFile)
 
 router.patch("/update/:id",protectedRoute,updateFile)
 

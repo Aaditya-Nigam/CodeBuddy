@@ -3,14 +3,13 @@ const File=require("../models/file.model")
 
 const createFile=async (req,res)=>{
     try {
-        const {fileName,content,language}=req.body
+        const {fileName,content,language,projectId,parentFolder}=req.body
         if(!fileName || !language){
             res.status(401).json({message: "Fields are missing!!"})
             return ;
         }
-        const {id}=req.params
         const userId=req.user._id
-        const project=await Project.findById(id);
+        const project=await Project.findById(projectId);
         if(!project){
             res.status(401).json({message: "No such project exists!!"})
             return ;
@@ -23,7 +22,8 @@ const createFile=async (req,res)=>{
             fileName,
             content,
             language,
-            projectId: id
+            projectId,
+            parentFolder
         })
         await newFile.save();
         await Project.updateOne({_id: id}, {$push: {files: newFile._id}})

@@ -1,22 +1,21 @@
 const mongoose=require("mongoose")
 
-const projectSchema=new mongoose.Schema({
-    projectName: {
+const folderSchema=new mongoose.Schema({
+    folderName: {
         type: String,
         required: true,
     },
-    author: {
+    parentFolder: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Folder',
+        default: null,
+        required: true
     },
-    collaborators: [{
+    projectId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    tasks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Task'
-    }],
+        ref: 'Project',
+        required: true
+    },
     folders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Folder',
@@ -27,5 +26,5 @@ const projectSchema=new mongoose.Schema({
     }]
 },{timestamps: true})
 
-const Project=new mongoose.model('Project',projectSchema);
-module.exports=Project
+const Folder=new mongoose.model('Folder', folderSchema)
+module.exports=Folder

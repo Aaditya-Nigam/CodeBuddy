@@ -16,6 +16,11 @@ const fileSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project',
         required: true
+    },
+    parentFolder: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Folder',
+        default: null
     }
 },{timestamps: true})
 

@@ -10,6 +10,7 @@ import { useEffect } from "react"
 import { Repo } from "./pages/Repo"
 import { File } from "./pages/File"
 import { Loader } from "./components/UI/Loader"
+import { NewFileFolder } from "./pages/NewFileFolder"
 
 export const App=()=>{
 
@@ -49,12 +50,15 @@ export const App=()=>{
             element: <Profile/>
           },
           {
-            path: "/projects/:id",
+            path: "/projects/:id/:parentFolder",
             element: <Repo/>
           },
           {
             path: "/projects/:projectId/:fileId/:index",
             element: <File/>
+          }, {
+            path: "/new/:projectId/:parentFolder",
+            element: <NewFileFolder/>
           }
         ]
       }

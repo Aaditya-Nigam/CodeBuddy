@@ -23,16 +23,16 @@ import { Loader } from "../components/UI/Loader";
 
 export const Repo=()=>{
 
-    const {id}=useParams()
+    const {id,parentFolder}=useParams()
     const {isLoading,project,loadProject,deleteFile,isCreatingProject,deleteTask,completeTask}=useProjectStore()
     const {authUser,socket}=useAuthStore()
-    const [showCreate,setShowCreate]=useState(false);
     const [copy,setCopy]=useState(false)
     const [showTasks,setShowTasks]=useState(true)
     const [showNewTasks,setShowNewTasks]=useState(false)
     const [showMessage,setShowMessage]=useState(false)
     const [files,setFiles]=useState([]);
     const navigate=useNavigate();
+    console.log(parentFolder)
     useEffect(()=>{
         if(!authUser){
             navigate("/login")
@@ -149,7 +149,7 @@ export const Repo=()=>{
                             <form>
                                 <input type="text" name="file" id="file" placeholder="Find files.." onChange={handleFileSearch} className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm w-full"/>    
                             </form>
-                            <button className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer" onClick={()=> setShowCreate(true)}>New</button>    
+                            <NavLink to={`/new/${project._id}/${parentFolder}`} className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer">New</NavLink>    
                         </div> 
                         <div className="py-4 flex flex-col gap-2">
                             {
@@ -174,7 +174,7 @@ export const Repo=()=>{
                     </div>
                 </div>
             </main>
-            <NewFile showCreate={showCreate} setShowCreate={setShowCreate}/>
+
             <NewTask showNewTasks={showNewTasks} setShowNewTasks={setShowNewTasks} collaborators={project.collaborators} id={id}/>
             <Message showMessage={showMessage} setShowMessage={setShowMessage} id={id}/>
             <Toaster/>
