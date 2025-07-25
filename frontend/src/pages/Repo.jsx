@@ -132,11 +132,11 @@ export const Repo=()=>{
                                     project.tasks.map((task,idx)=>{
                                         return (
                                             <div key={idx} className="grid grid-cols-[4fr_1fr] gap-1 py-1 px-4 bg-[#1e2327] rounded">
-                                                <div className="w-full overflow-auto taskContainer">
+                                                <div className="w-full overflow-auto taskContainer flex flex-col gap-1">
                                                     {
                                                         task.completed?<h1 className="text-sm line-through text-green-500 ">{task.title}</h1>:<h1 className="text-sm w-full">{task.title}</h1>
                                                     }
-                                                    <p className="text-xs text-zinc-700 w-full">{task.author}</p>
+                                                    <p className="text-xs text-zinc-500 w-full">{task.author}</p>
                                                 </div>
                                                 <div className="flex gap-2 items-center">
                                                     {
