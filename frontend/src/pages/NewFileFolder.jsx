@@ -3,29 +3,29 @@ import toast, { Toaster } from "react-hot-toast"
 import { useProjectStore } from "../store/useProjectStore"
 import { NavLink, useNavigate, useParams } from "react-router-dom"
 import { FaArrowLeftLong } from "react-icons/fa6";
+import {useFolderStore} from "../store/useFolderStore";
+import { useFileStore } from "../store/useFileStore";
 
 export const NewFileFolder=()=>{
     console.log("khkjhkj")
     
-    const {projectId,parentFolder}=useParams()
-    const {createFile,isCreatingFile}=useProjectStore()
+    const {projectId,parentFolder,grandParentFolder}=useParams()
+    const {createFile,isCreatingFile}=useFileStore()
+    const {isCreatingFolder,createFolder}=useFolderStore()
     const navigate=useNavigate()
     
     const [file,setFile]=useState({
         fileName: "",
-        language: "cpp",
+        language: "cpp", 
         content: "//Write your code",
         parentFolder: parentFolder,
         projectId: projectId
     })
     const [folder,setFolder]=useState({
-        folderName: ""
+        folderName: "",
+        parentFolder: parentFolder,
+        projectId: projectId
     })
-
-    useState(()=>{
-        console.log("jgjhj")
-        navigate(`/project/${projectId}/${parentFolder}`)
-    },[])
 
     const chechFileFormData=()=>{
         if(file.fileName.trim().length==0){
@@ -47,8 +47,33 @@ export const NewFileFolder=()=>{
                 parentFolder: parentFolder,
                 projectId: projectId
             })
-            // setShowCreate(false)
-            navigate(`/project/${projectId}/${parentFolder}`)
+            navigate(`/projects/${projectId}/${grandParentFolder}/${parentFolder}`)
+        }
+    }
+
+    const chechFolderFormData=()=>{
+        if(folder.folderName.trim().length==0){
+            toast.error("Invalid folder name!!")
+            return false;
+        }
+        if(folder.folderName.trim()=='root'){
+            toast.error("Folder name cannot be root!!")
+            return false;
+        }
+        return true;
+    }
+
+    const handleFolderFormSubmit=(e)=>{
+        e.preventDefault()
+        const check=chechFolderFormData();
+        if(check){
+            createFolder(folder);
+            setFolder({
+                folderName: "",
+                parentFolder: parentFolder,
+                projectId: projectId
+            })
+            navigate(`/projects/${projectId}/${grandParentFolder}/${parentFolder}`)
         }
     }
 
@@ -56,7 +81,7 @@ export const NewFileFolder=()=>{
         <div className={`fixed top-0 text-white bg-zinc-900 w-screen h-screen flex justify-center items-center `}>
             <div className=" w-[95%] h-[90%] gap-4 border-1 border-zinc-500 rounded-lg bg-zinc-900 py-4" onClick={(e)=> e.stopPropagation()}>
                 <div className="pl-8">
-                    <NavLink to={`/projects/${projectId}/${parentFolder}`} className="bg-sky-500 flex gap-2 items-center w-fit px-3 py-0.5 rounded-lg text-md hover:bg-sky-600"><FaArrowLeftLong/>Back</NavLink>
+                    <NavLink to={`/projects/${projectId}/${grandParentFolder}/${parentFolder}`} className="bg-sky-500 flex gap-2 items-center w-fit px-3 py-0.5 rounded-lg text-md hover:bg-sky-600"><FaArrowLeftLong/>Back</NavLink>
                 </div>
                 <div className="grid grid-cols-2 ">
                     <div className="border-r border-zinc-700 flex flex-col items-center p-8">
@@ -82,12 +107,12 @@ export const NewFileFolder=()=>{
                     <div className="border-r border-zinc-700 flex flex-col items-center p-8">
                         <h1 className="text-2xl pb-4">New Folder</h1>
                         <div className="w-full">
-                            <form className="flex flex-col gap-8" onSubmit={handleFileFormSubmit}>
+                            <form className="flex flex-col gap-8" onSubmit={handleFolderFormSubmit}>
                                 <div className="flex flex-col gap-1">
                                     <label htmlFor="folderName" className="text-sm">Folder Name</label> 
                                     <input type="text" name="folderName" id="folderName" placeholder="Folder name..." value={folder.folderName} onChange={(e)=> setFolder({...folder, [e.target.name]: e.target.value})} className="bg-zinc-800 w[300px] border-1 border-zinc-500 rounded px-2 py-1 text-sm" required/>
                                 </div>
-                                <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer" disabled={isCreatingFile}/>
+                                <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer" disabled={isCreatingFolder}/>
                             </form>
                         </div>
                     </div>

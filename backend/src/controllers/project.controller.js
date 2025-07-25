@@ -1,4 +1,5 @@
 const User = require("../models/auth.model");
+const Folder = require("../models/folder.model");
 const Project=require("../models/project.model")
 
 
@@ -21,10 +22,17 @@ const createProject=async (req,res)=>{
         })
         await User.updateOne({_id: req.user._id}, {$push: {projects: newProject._id}})  
         newProject.save();
+        const rootFolder=new Folder({
+            folderName: "root",
+            parentFolder: null,
+            projectId: newProject._id
+        })
+        await rootFolder.save();
+        await Project.updateOne({_id: newProject._id}, {rootFolder: rootFolder._id})
         res.status(201).json(newProject);
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})
-        console.log("error in create project controller: ",error.message)
+        console.log("error in create project controller: ",error)
     }
 }
 

@@ -50,14 +50,14 @@ export const App=()=>{
             element: <Profile/>
           },
           {
-            path: "/projects/:id/:parentFolder",
+            path: "/projects/:id/:parentFolder/:folderID",
             element: <Repo/>
           },
           {
-            path: "/projects/:projectId/:fileId/:index",
+            path: "/projects/file/:projectId/:parentFolder/:fileId/",
             element: <File/>
           }, {
-            path: "/new/:projectId/:parentFolder",
+            path: "/new/:projectId/:grandParentFolder/:parentFolder",
             element: <NewFileFolder/>
           }
         ]

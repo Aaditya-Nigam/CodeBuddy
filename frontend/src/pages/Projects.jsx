@@ -66,7 +66,7 @@ export const Projects=()=>{
                                         <div key={index} className="bg-[#1e232765] px-4 py-2 border-2 rounded-lg border-[#1e2327] flex justify-between items-center w-full max-[430px]:w-[200px]">
                                             <div>
                                                 <div className="flex items-center gap-2">
-                                                    <NavLink to={`${project._id}/${null}`} className="text-xl text-sky-700 font-semibold hover:underline max-[850px]:text-lg max-[430px]:text-sm">{project.projectName}</NavLink>
+                                                    <NavLink to={`${project._id}/${null}/${project.rootFolder}`} className="text-xl text-sky-700 font-semibold hover:underline max-[850px]:text-lg max-[430px]:text-sm">{project.projectName}</NavLink>
                                                     {
                                                         authUser._id==project.author?<div className="text-xs text-zinc-700 border-1 border-zinc-700 px-1.5 rounded-xl bg-[#0e1219] max-[500px]:hidden">Author</div>:''
                                                     }

@@ -1,6 +1,6 @@
 const express=require("express");
 const protectedRoute = require("../middleware/auth.middleware");
-const { getFolders } = require("../controllers/folder.controller");
+const { getFolders, createFolder } = require("../controllers/folder.controller");
 const router=express.Router();
 
 router.get("/getFolder/:projectId/:folderId", protectedRoute, getFolders)

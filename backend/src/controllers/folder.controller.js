@@ -4,8 +4,12 @@ const Project = require("../models/project.model");
 const getFolders=async(req,res)=>{
     try {
         const {projectId,folderId}=req.params;
-        const folders=await Folder.find({parentFolder: folderId, projectId})
-        res.status(201).json(folders);
+        const folder=await Folder.findOne({_id: folderId, projectId}).populate({path: 'folders'}).populate({path: 'files'})
+        if(!folder){
+            res.status(401).json({message: "No such folder found!"});
+            return ;
+        }
+        res.status(201).json(folder);
     } catch (error) {
         res.status(401).json({message: "Internal server error!"})
         console.log("Error in getFolder controller: ",error);
@@ -21,25 +25,21 @@ const createFolder=async(req,res)=>{
             return ;
         }
         const project=await Project.findById(projectId);
-            if(!project){
-                res.status(401).json({message: "No such project exists!!"})
-                return ;
-            }
-            if(!project.collaborators.includes(userId)){
-                res.status(401).json({message: "No such project exists!!"})
-                return ;
-            }
+        if(!project){
+            res.status(401).json({message: "No such project exists!!"})
+            return ;
+        }
+        if(!project.collaborators.includes(userId)){
+            res.status(401).json({message: "No such project exists!!"})
+            return ;
+        }
         const folder=new Folder({
             folderName,
             parentFolder,
             projectId
         })
         await folder.save();
-        if(parentFolder){
-            await Folder.findByIdAndUpdate(parentFolder, {$push : {folders: folder._id}})
-        }else{
-            await Project
-        }
+        await Folder.updateOne({_id: parentFolder}, {$push: {folders: folder._id}})
         res.status(201).json(folder)
     } catch (error) {
         res.status(401).json({message: "Internal server error!"})

@@ -7,7 +7,7 @@ import { Loader } from "../components/UI/Loader";
 
 export const File = () => {
   const { project, loadProject } = useProjectStore();
-  const { projectId, fileId } = useParams();
+  const { projectId, fileId, parentFolder } = useParams();
   const prevProjectId = useRef(null);
 
   useEffect(() => {

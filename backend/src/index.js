@@ -8,6 +8,7 @@ const projectRouter=require("./routers/project.router")
 const messageRouter=require("./routers/message.router")
 const fileRouter=require("./routers/file.router")
 const taskRouter=require("./routers/task.router")
+const folderRoute=require("./routers/folder.router")
 const {app,server}=require("./lib/socket");
 const path=require("path")
 dotenv.config()
@@ -25,6 +26,7 @@ app.use("/api/project",projectRouter)
 app.use("/api/message",messageRouter)
 app.use("/api/file",fileRouter)
 app.use("/api/task",taskRouter)
+app.use("/api/folder",folderRoute)
 
 if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(_dirname,"../frontend/dist")))

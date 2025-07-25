@@ -9,7 +9,6 @@ const folderSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Folder',
         default: null,
-        required: true
     },
     projectId: {
         type: mongoose.Schema.Types.ObjectId,

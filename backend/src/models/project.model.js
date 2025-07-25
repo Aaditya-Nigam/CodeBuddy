@@ -24,7 +24,11 @@ const projectSchema=new mongoose.Schema({
     files: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'File'
-    }]
+    }],
+    rootFolder: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Folder'
+    }
 },{timestamps: true})
 
 const Project=new mongoose.model('Project',projectSchema);

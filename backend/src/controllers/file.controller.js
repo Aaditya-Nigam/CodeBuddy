@@ -1,10 +1,11 @@
 const Project = require("../models/project.model")
 const File=require("../models/file.model")
+const Folder = require("../models/folder.model")
 
 const createFile=async (req,res)=>{
     try {
         const {fileName,content,language,projectId,parentFolder}=req.body
-        if(!fileName || !language){
+        if(!fileName || !language || !projectId || !parentFolder){
             res.status(401).json({message: "Fields are missing!!"})
             return ;
         }
@@ -26,7 +27,7 @@ const createFile=async (req,res)=>{
             parentFolder
         })
         await newFile.save();
-        await Project.updateOne({_id: id}, {$push: {files: newFile._id}})
+        await Folder.updateOne({_id: parentFolder}, {$push: {files: newFile._id}})
         res.status(201).json(newFile)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})

@@ -6,7 +6,6 @@ import { FaRegUser } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { RxAvatar } from "react-icons/rx";
 import moment from "moment"
-import { NewFile } from "../components/UI/NewFile";
 import toast, { Toaster } from "react-hot-toast";
 import { FaRegCopy } from "react-icons/fa6";
 import { LuCopyCheck } from "react-icons/lu";
@@ -20,19 +19,24 @@ import { Message } from "../components/UI/Message";
 import { TbMessage2Filled } from "react-icons/tb";
 import { FaStar } from "react-icons/fa6";
 import { Loader } from "../components/UI/Loader";
+import {useFolderStore} from "../store/useFolderStore";
+import { FaRegFolderOpen } from "react-icons/fa";
+import { ImFilesEmpty } from "react-icons/im";
 
 export const Repo=()=>{
 
-    const {id,parentFolder}=useParams()
+    const {id,parentFolder,folderID}=useParams()
     const {isLoading,project,loadProject,deleteFile,isCreatingProject,deleteTask,completeTask}=useProjectStore()
+    const {getFolder,folder}=useFolderStore()
     const {authUser,socket}=useAuthStore()
     const [copy,setCopy]=useState(false)
     const [showTasks,setShowTasks]=useState(true)
     const [showNewTasks,setShowNewTasks]=useState(false)
     const [showMessage,setShowMessage]=useState(false)
     const [files,setFiles]=useState([]);
+    const [folders,setFolders]=useState([]);
     const navigate=useNavigate();
-    console.log(parentFolder)
+    // console.log(folderID)
     useEffect(()=>{
         if(!authUser){
             navigate("/login")
@@ -41,17 +45,33 @@ export const Repo=()=>{
     
     useEffect(()=>{
         loadProject(id);
-    },[id])
+    },[])
+    // console.log(project)
+
+    // const folderID= folderName=='root'?project.rootFolder
 
     useEffect(()=>{
+        // console.log("hh")
         if(project){
-            setFiles(project.files)
+            // console.log(project.rootFolder) 
+            getFolder({
+                projectId: id,
+                folderID
+            })
         }
-    },[project])
+    },[id,folderID,project])
+
+    useEffect(()=>{
+        if(folder){
+            setFolders(folder.folders)
+            setFiles(folder.files)
+        }
+    },[folder])
 
     if(isLoading && !project){
         return <Loader/>
     }
+    // console.log(folder)
 
     const handleCopyId=async(projectId)=>{
         try {
@@ -67,7 +87,7 @@ export const Repo=()=>{
     }
 
     const handleFileSearch=(e)=>{
-        const updatedList=project.files.filter((file)=>{
+        const updatedList=folder.files.filter((file)=>{
             return file.fileName.toLowerCase().includes(e.target.value.toLowerCase());
         })
         setFiles(updatedList)
@@ -149,16 +169,38 @@ export const Repo=()=>{
                             <form>
                                 <input type="text" name="file" id="file" placeholder="Find files.." onChange={handleFileSearch} className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm w-full"/>    
                             </form>
-                            <NavLink to={`/new/${project._id}/${parentFolder}`} className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer">New</NavLink>    
+                            <NavLink to={`/new/${project?._id}/${parentFolder}/${folder?._id}`} className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer">New</NavLink>    
                         </div> 
                         <div className="py-4 flex flex-col gap-2">
+                            {
+                                folders.map((f,index)=>{
+                                    return ( 
+                                        <div key={index} className="bg-[#1e2327] px-4 py-2 rounded-lg flex justify-between items-center">
+                                            <div className="flex items-center gap-2">
+                                                <FaRegFolderOpen className="text-2xl text-yellow-400"/>
+                                                <div>
+                                                    <NavLink to={`/projects/${project._id}/${f._id}/${f._id}`} className="text-md">{f.folderName?.split('.')[0]}</NavLink> 
+                                                    <div className="text-xs text-zinc-600">{moment(f.createdAt).fromNow()}</div>   
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <MdDelete className="text-2xl" onClick={(e)=> {deleteFile(f._id)}}/>
+                                            </div>
+                                            {/* <p>{f.folderName}</p> */}
+                                        </div>
+                                    )
+                                })
+                            }
                             {
                                 files.map((file,index)=>{
                                     return ( 
                                         <div key={index} className="bg-[#1e2327] px-4 py-2 rounded-lg flex justify-between items-center">
-                                            <div>
-                                                <NavLink to={`/projects/${project._id}/${file._id}/${index}`} className="text-md">{file.fileName?.split('.')[0]}&nbsp;&nbsp;<span className="text-xs text-zinc-700">{moment(file.createdAt).fromNow()}</span></NavLink>
-                                                <p className="text-sm text-zinc-400">Language: <span className="text-zinc-600">{file.language}</span></p>
+                                            <div className="flex gap-3 items-center">
+                                                <ImFilesEmpty className="text-xl"/>
+                                                <div>
+                                                    <NavLink to={`/projects/file/${project._id}/${folder._id}/${file._id}`} className="text-md">{file.fileName?.split('.')[0]}&nbsp;&nbsp;<span className="text-xs text-zinc-700">{moment(file.createdAt).fromNow()}</span></NavLink>
+                                                    <p className="text-sm text-zinc-400">Language: <span className="text-zinc-600">{file.language}</span></p>
+                                                </div>
                                             </div>
                                             <div>
                                                 <MdDelete className="text-2xl" onClick={(e)=> {deleteFile(file._id)}}/>
@@ -168,7 +210,7 @@ export const Repo=()=>{
                                 })
                             }
                             {
-                                files.length==0?<p className="text-zinc-700">No file found!</p>:""
+                                files.length==0 && folders.length==0?<p className="text-zinc-700">No files & folders found!</p>:""
                             }
                         </div>
                     </div>
