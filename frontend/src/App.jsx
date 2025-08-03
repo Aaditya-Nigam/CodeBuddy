@@ -11,6 +11,7 @@ import { Repo } from "./pages/Repo"
 import { File } from "./pages/File"
 import { Loader } from "./components/UI/Loader"
 import { NewFileFolder } from "./pages/NewFileFolder"
+import { Message } from "./pages/Message"
 
 export const App=()=>{
 
@@ -56,9 +57,14 @@ export const App=()=>{
           {
             path: "/projects/file/:projectId/:parentFolder/:fileId/",
             element: <File/>
-          }, {
+          }, 
+          {
             path: "/new/:projectId/:grandParentFolder/:parentFolder",
             element: <NewFileFolder/>
+          },
+          {
+            path: "/message/:projectId",
+            element: <Message/>
           }
         ]
       }

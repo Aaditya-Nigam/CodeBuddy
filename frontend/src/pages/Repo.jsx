@@ -15,7 +15,7 @@ import { SiTicktick } from "react-icons/si";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaPlusSquare } from "react-icons/fa";
 import { NewTask } from "../components/UI/NewTask";
-import { Message } from "../components/UI/Message";
+import { Message } from "./Message";
 import { TbMessage2Filled } from "react-icons/tb";
 import { FaStar } from "react-icons/fa6";
 import { Loader } from "../components/UI/Loader";
@@ -32,7 +32,6 @@ export const Repo=()=>{
     const [copy,setCopy]=useState(false)
     const [showTasks,setShowTasks]=useState(true)
     const [showNewTasks,setShowNewTasks]=useState(false)
-    const [showMessage,setShowMessage]=useState(false)
     const [files,setFiles]=useState([]);
     const [folders,setFolders]=useState([]);
     const navigate=useNavigate();
@@ -46,14 +45,9 @@ export const Repo=()=>{
     useEffect(()=>{
         loadProject(id);
     },[])
-    // console.log(project)
-
-    // const folderID= folderName=='root'?project.rootFolder
 
     useEffect(()=>{
-        // console.log("hh")
-        if(project){
-            // console.log(project.rootFolder) 
+        if(project){ 
             getFolder({
                 projectId: id,
                 folderID
@@ -163,7 +157,9 @@ export const Repo=()=>{
                                     copy?<LuCopyCheck className="text-sm cursor-pointer text-green-600 max-[700px]:text-xs"/>:<FaRegCopy className="text-sm cursor-pointer max-[700px]:text-xs" onClick={()=>handleCopyId(project._id)}/>
                                 }
                             </div>
-                            <TbMessage2Filled className="text-xl cursor-pointer max-[700px]:text-base max-[600px]:hidden" onClick={()=> setShowMessage(true)}/>
+                            <NavLink to={`/message/${id}`}>
+                                <TbMessage2Filled className="text-xl cursor-pointer max-[700px]:text-base max-[600px]:hidden"/>
+                            </NavLink>
                         </div>
                         <div className="grid grid-cols-[10fr_1fr] gap-4 justifycenter py-4">
                             <form>
@@ -179,7 +175,7 @@ export const Repo=()=>{
                                             <div className="flex items-center gap-2">
                                                 <FaRegFolderOpen className="text-2xl text-yellow-400"/>
                                                 <div>
-                                                    <NavLink to={`/projects/${project._id}/${f._id}/${f._id}`} className="text-md">{f.folderName?.split('.')[0]}</NavLink> 
+                                                    <NavLink to={`/projects/${project._id}/${folderID}/${f._id}`} className="text-md">{f.folderName?.split('.')[0]}</NavLink> 
                                                     <div className="text-xs text-zinc-600">{moment(f.createdAt).fromNow()}</div>   
                                                 </div>
                                             </div>
@@ -218,7 +214,6 @@ export const Repo=()=>{
             </main>
 
             <NewTask showNewTasks={showNewTasks} setShowNewTasks={setShowNewTasks} collaborators={project.collaborators} id={id}/>
-            <Message showMessage={showMessage} setShowMessage={setShowMessage} id={id}/>
             <Toaster/>
         </>
     )

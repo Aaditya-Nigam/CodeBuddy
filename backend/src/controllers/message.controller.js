@@ -23,7 +23,8 @@ const sendMessage=async (req,res)=>{
         })
         await newMessage.save();
         io.to(id).emit("newMessage",newMessage)
-        res.status(201).json(newMessage)
+        const message=await Message.findById(newMessage._id).populate({path: 'senderId'})
+        res.status(201).json(message)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"})
         console.log("error in send message controller: ",error.message)
@@ -43,7 +44,7 @@ const getMessages=async (req,res)=>{
             res.status(401).json({message: "You are not a collaborator!!"});
             return ;
         }
-        const messages=await Message.find({projectId: id})
+        const messages=await Message.find({projectId: id}).populate({path: 'senderId'})
         res.status(201).json(messages)
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});
