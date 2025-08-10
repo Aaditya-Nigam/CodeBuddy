@@ -75,7 +75,7 @@ export const Projects=()=>{
                                                 <span className="mr-8 text-zinc-700 text-sm max-[850px]:text-xs max-[430px]:text-[10px]">Collaborators: {project.collaborators?.length}</span>
                                                 <span className="text-zinc-700 text-sm max-[850px]:text-xs max-[600px]:hidden">Created {moment(project.createdAt).fromNow()}</span>
                                             </div>
-                                            <MdDelete className="text-2xl invert max-[850px]:text-xl max-[430px]:text-base" onClick={(e)=> {deleteProject(project._id)}}/>
+                                            <MdDelete className="text-2xl invert max-[850px]:text-xl max-[430px]:text-base cursor-pointer" onClick={(e)=> {deleteProject(project._id)}}/>
                                         </div>
                                     )
                                 })
