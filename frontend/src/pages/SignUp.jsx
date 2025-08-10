@@ -64,8 +64,8 @@ export const SignUp=()=>{
     }
 
     return (
-        <div className="w-screen h-screen bg-black flex items-center justify-center text-white">
-            <div className="w-[500px] p-4 rounded-xl max-[500px]:w-[300px]">
+        <div className="w-screen h-screen bg-gradient-to-br from-black via-[#210537] to-[#490b76] flex items-center justify-center text-white">
+            <div className="w-[500px] p-4 rounded-xl max-[500px]:w-[300px] border-t-1 border-[#ffffff32] shadow-lg shadow-[#ffffff45]">
                 <div className="flex justify-center p-2">
                     <img src="./logo_short.jpg" alt="" className=" h-[60px] rounded-xl border-1 border-zinc-700"/>
                 </div>
@@ -77,28 +77,28 @@ export const SignUp=()=>{
                     <div className="py-8 flex flex-col items-center gap-4 w-full min-[500px]:w-[400px]">
                         <div className="flex flex-col gap-1 w-full">
                             <label htmlFor="fullName" className="text-zinc-400 max-[500px]:text-sm">Full Name</label>
-                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none">
+                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none bg-[#261634]">
                                 <FaRegUser className="text-sm"/>
                                 <input type="text" name="fullName" id="fullName" value={user.fullName} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="Aaditya Nigam" className="w-full outline-none max-[500px]:text-sm"/>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <label htmlFor="userName" className="text-zinc-400 max-[500px]:text-sm">Username</label>
-                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none">
+                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none bg-[#261634]">
                                 <FaRegUser className="text-sm"/>
                                 <input type="text" name="userName" id="userName" value={user.userName} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="Aaditya_Nigam" className="w-full outline-none max-[500px]:text-sm"/>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <label htmlFor="email" className="text-zinc-400 max-[500px]:text-sm">Email</label>
-                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none">
+                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none bg-[#261634]">
                                 <MdOutlineEmail className="text-lg"/>
                                 <input type="email" name="email" id="email" value={user.email} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="aaditya@email.com" className="w-full outline-none max-[500px]:text-sm"/>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1 w-full">
                             <label htmlFor="password" className="text-zinc-400 max-[500px]:text-sm">Password</label>
-                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none">
+                            <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none bg-[#261634]">
                                 <TbLockPassword className="text-lg"/>
                                 <input type={showPassword?"text":"password"} name="password" id="password" value={user.password} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="********" className="w-full outline-none max-[500px]:text-sm"/>
                                 {
