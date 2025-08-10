@@ -15,6 +15,7 @@ export const useAuthStore=create((set,get)=>({
     isCreatingProject: false,
     isJoiningProject: false,
     socket: null,
+    isUpdatingImage: false,
 
     signup: async(user)=>{
         set({isSigningUp: true})
@@ -145,6 +146,20 @@ export const useAuthStore=create((set,get)=>({
             set({socket: null});
         } catch (error) {
             console.log("error in connect socket: ",error.message)
+        }
+    },
+
+    changeProfile: async(formData)=>{
+        try {
+            set({isUpdatingImage: true})
+            const res=await axiosInstance.post("/auth/changeProfile",formData)
+            const data=await res.data
+            set({authUser: data})
+        } catch (error) {
+            console.log("Error in changeProfile useAuthStore: ",error)
+            toast.error(error.message)
+        }finally{
+            set({isUpdatingImage: false})
         }
     }
 }))

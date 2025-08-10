@@ -1,4 +1,5 @@
 const generateToken = require("../lib/auth");
+const v2 = require("../lib/cloudinary");
 const User = require("../models/auth.model");
 const bcrypt=require("bcrypt")
 
@@ -119,11 +120,29 @@ const authCheck=async (req,res)=>{
     }
 }
 
+const changeProfile=async(req,res)=>{
+    try {
+        const {profilePic}=req.body
+        const userId=req.user._id
+        if(!profilePic){
+            res.status(401).jdon({message: "Fields are missing!"})
+            return ;
+        }
+        const updatedResponse=await v2.uploader.upload(profilePic);
+        const updatedUser=await User.findByIdAndUpdate(userId, {profilePic:updatedResponse.secure_url},{new:true})
+        res.status(201).json(updatedUser) 
+    } catch (error) {
+        console.log("Error in changeProfile controller: ",error)
+        res.status(401).json({message: error.message})
+    }
+}
+
 
 module.exports={
     authSignUp,
     authSignIn,
     authLogout,
     authUpdateSkills,
-    authCheck
+    authCheck,
+    changeProfile
 }

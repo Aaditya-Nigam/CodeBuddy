@@ -1,23 +1,53 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore"
-import { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { IoCameraOutline } from "react-icons/io5";
+import { LuLoader } from "react-icons/lu";
 import moment from "moment"
 
 export const Profile=()=>{
-    const {authUser,logout}=useAuthStore()
+    const {authUser,logout,changeProfile,isUpdatingImage}=useAuthStore()
+    const [image,setImage]=useState(null)
     const navigate=useNavigate();
     useEffect(()=>{
         if(!authUser){
             navigate("/login")
         }
     },[authUser])
+    console.log(authUser)
+
+    const handleProfileChange=(e)=>{
+        const f=e.target.files[0].name;
+        const extension=f.split('.').pop()
+        if(extension!='png' && extension!='jpg'){
+            toast.error("Only jpg and png file formats are allowed!")
+            return ;
+        }
+        const reader=new FileReader();
+        reader.readAsDataURL(e.target.files[0])
+        reader.onload=async()=>{
+            const base64ImageUrl=reader.result;
+            setImage(base64ImageUrl)
+            changeProfile({profilePic: base64ImageUrl})
+        }
+    }
+
     return (
         <main className="bg-[#0d1117] min-h-[91.7vh]">
             <div className="w-[80%] mx-auto h-full py-12 ">
                 <div className="flex flex-col items-center gap-4 ">
-                    <img src={authUser?.profilePic || "./avatar.png"} alt="" className="w-[200px] border-4 border-sky-600 rounded-[50%] max-[650px]:w-[100px]"/>
-                    <button className="bg-rose-700 px-4 py-1 rounded-3xl text-white mb-4 max-[650px]:text-sm" onClick={async ()=> await logout()}>Logout</button>
+                    <div className="relative">
+                        <img src={image || authUser?.profilePic || "./avatar.png"} alt="" className="w-[200px] h-[200px] object-cover border-4 border-sky-600 rounded-[50%] max-[650px]:w-[100px]"/>
+                        <label htmlFor="profile">
+                            {
+                                isUpdatingImage?<LuLoader className="text-white bg-black border-2 border-sky-400 rounded-[50%] p-1 text-3xl absolute bottom-2 left-[70%] cursor-pointer" />:
+                                <IoCameraOutline className="text-white bg-black border-2 border-sky-400 rounded-[50%] p-1 text-3xl absolute bottom-2 left-[70%] cursor-pointer" />
+                            }
+                        </label>
+                        <input type="file" name="profile" id="profile" onChange={handleProfileChange} className="hidden" disabled={isUpdatingImage}/>
+                    </div>
+                    <button className="bg-rose-700 px-4 py-1 rounded-3xl text-white mb-4 max-[650px]:text-sm" onClick={async ()=> await logout()} disabled={isUpdatingImage}>Logout</button>
                     <div className="flex flex-col gap-4 w-fit">
                         <div className="flex gap-4 text-white">
                             <p className="text-zinc-400 text-lg max-[650px]:text-base">Full Name</p>
