@@ -12,7 +12,7 @@ import { File } from "./pages/File"
 import { Loader } from "./components/UI/Loader"
 import { NewFileFolder } from "./pages/NewFileFolder"
 import { Message } from "./pages/Message"
-import { Welcome } from "./components/loaders/welcome"
+import { Welcome } from "./components/loaders/Welcome"
 
 export const App=()=>{
 

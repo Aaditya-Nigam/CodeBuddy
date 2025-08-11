@@ -8,7 +8,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { FaTasks } from "react-icons/fa";
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore"
-import { Welcome } from "../components/loaders/welcome";
+import { Welcome } from "../components/loaders/Welcome";
 
 export const Home=()=>{
     const {authUser}=useAuthStore()
