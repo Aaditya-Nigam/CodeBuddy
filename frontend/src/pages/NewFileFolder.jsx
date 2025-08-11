@@ -98,6 +98,9 @@ export const NewFileFolder=()=>{
                                         <option value="cpp">Cpp</option>
                                         <option value="javascript">JavaScript</option>
                                         <option value="python">Python</option>
+                                        <option value="java">Java</option>
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
                                     </select>
                                 </div>
                                 <input type="submit" value="Create" className="bg-sky-600 hover:bg-sky-700 ease-in duration-200 border-1 border-zinc-500 rounded px-2 py-1 text-lg cursor-pointer" disabled={isCreatingFile}/>

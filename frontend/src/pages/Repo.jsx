@@ -22,6 +22,7 @@ import { Loader } from "../components/UI/Loader";
 import {useFolderStore} from "../store/useFolderStore";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { ImFilesEmpty } from "react-icons/im";
+import { Welcome } from "../components/loaders/welcome";
 
 export const Repo=()=>{
 
@@ -63,9 +64,8 @@ export const Repo=()=>{
     },[folder])
 
     if(isLoading && !project){
-        return <Loader/>
+        return <Welcome/>
     }
-    // console.log(folder)
 
     const handleCopyId=async(projectId)=>{
         try {
@@ -212,7 +212,6 @@ export const Repo=()=>{
                     </div>
                 </div>
             </main>
-
             <NewTask showNewTasks={showNewTasks} setShowNewTasks={setShowNewTasks} collaborators={project.collaborators} id={id}/>
             <Toaster/>
         </>

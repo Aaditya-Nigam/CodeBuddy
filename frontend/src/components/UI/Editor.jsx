@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
+
 import CodeMirror from "@uiw/react-codemirror"; 
 import { python } from "@codemirror/lang-python";
 import { javascript } from "@codemirror/lang-javascript";
 import { cpp } from "@codemirror/lang-cpp";
+import { java } from "@codemirror/lang-java";
+import { html } from "@codemirror/lang-html";
+import { css } from "@codemirror/lang-css";
+import { text } from "@codemirror/lang-text";
 import { basicSetup } from "codemirror"; 
+import { autocompletion, closeBrackets } from "@codemirror/autocomplete"; 
+import { indentUnit } from "@codemirror/language"; 
+// import { bracketMatching } from "codemirror/matchbrackets"; 
+
 import { useFileStore } from "../../store/useFileStore";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -50,6 +59,15 @@ export const Editor = ({ fileId }) => {
     if(str==='javascript'){
       return javascript();
     }
+    if(str=='html'){
+      return html();
+    }
+    if(str=='css'){
+      return css();
+    }
+    if(str=='java'){
+      return java();
+    }
   }
 
   return (
@@ -60,7 +78,7 @@ export const Editor = ({ fileId }) => {
       </div>
       <CodeMirror
         value={code}
-        extensions={[langReq(file.language), basicSetup]}
+        extensions={[langReq(file.language), basicSetup,autocompletion(),closeBrackets(),indentUnit.of("    ")]}
         onChange={(val) => setCode(val)}
         theme="dark"
         />

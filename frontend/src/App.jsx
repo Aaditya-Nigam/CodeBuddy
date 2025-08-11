@@ -12,6 +12,7 @@ import { File } from "./pages/File"
 import { Loader } from "./components/UI/Loader"
 import { NewFileFolder } from "./pages/NewFileFolder"
 import { Message } from "./pages/Message"
+import { Welcome } from "./components/loaders/welcome"
 
 export const App=()=>{
 
@@ -21,7 +22,7 @@ export const App=()=>{
   },[check])
 
   if(isCheckingAuth && !authUser){
-    return <Loader/>
+    return <Welcome/>
   }
 
   const router=createBrowserRouter(
