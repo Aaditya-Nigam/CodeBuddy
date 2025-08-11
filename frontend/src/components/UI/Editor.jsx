@@ -7,7 +7,6 @@ import { cpp } from "@codemirror/lang-cpp";
 import { java } from "@codemirror/lang-java";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
-import { text } from "@codemirror/lang-text";
 import { basicSetup } from "codemirror"; 
 import { autocompletion, closeBrackets } from "@codemirror/autocomplete"; 
 import { indentUnit } from "@codemirror/language"; 
