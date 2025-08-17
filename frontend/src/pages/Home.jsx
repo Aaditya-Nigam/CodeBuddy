@@ -23,7 +23,7 @@ export const Home=()=>{
         <main className="bg-[#0d1117] min-h-[91.7vh] text-white">
             <div className="h-full mx-auto">
                 <div className="flex justify-center pt-4">
-                    <p className="bg-[#d9baef] text-[#5c207a] px-4 rounded-2xl text-sm">Version 2.1.0</p>
+                    <p className="bg-[#d9baef] text-[#5c207a] px-4 rounded-2xl text-sm">Version 2.2.0</p>
                 </div>
                 <div className="py-4 px-8 flex justify-center items-center gap-8 max-[800px]:flex-col">
                     <div className="flex flex-col gap-8 max-[800px]:order-2">
