@@ -21,7 +21,7 @@ export const SignUp=()=>{
         if(authUser){
             navigate("/")
         }
-    },[])
+    },[authUser])
 
     const [showPassword,setShowPassword]=useState(false)
 
@@ -51,9 +51,6 @@ export const SignUp=()=>{
         const check=checkFormData();
         if(check){
             const sign=await signup(user);
-            if(sign){
-                navigate("/");
-            }
             setUser({
                 fullName: "",
                 userName: "",

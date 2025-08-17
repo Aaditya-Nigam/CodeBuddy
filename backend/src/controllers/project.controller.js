@@ -46,7 +46,7 @@ const joinProject=async (req,res)=>{
             return ;
         }
         if(project.collaborators.includes(userId)){
-            res.status(401).json(project);
+            res.status(401).json({message: "Already a member!"});
             return ;
         }
         await Project.updateOne({_id: id}, {$push: {collaborators: userId}})

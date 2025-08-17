@@ -81,10 +81,8 @@ export const useAuthStore=create((set,get)=>({
             const authUser=get().authUser
             const res=await axiosInstance.post("/project/newProject",formData)
             const data=res.data;
-            authUser.projects.push(data);
-            set({authUser: authUser})
+            set({authUser: {...authUser, projects: [...(authUser?.projects || []), data]}})            
         } catch (error) {
-            toast.error(error.response?.data.message)
             console.log(error)
         }finally{
             set({isCreatingProject: false})
@@ -99,8 +97,10 @@ export const useAuthStore=create((set,get)=>({
             const res=await axiosInstance.post(`/project/joinProject/${id}`)
             const data=res.data
             if(!authUser.projects.includes(data)){
+                console.log(!authUser.projects.includes(data))
                 authUser.projects.push(data);
             }
+            set({authUser: authUser})
         } catch (error) {
             toast.error(error.response?.data.message)
             console.log(error)
