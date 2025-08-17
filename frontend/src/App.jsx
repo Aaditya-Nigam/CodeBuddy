@@ -13,6 +13,8 @@ import { Loader } from "./components/UI/Loader"
 import { NewFileFolder } from "./pages/NewFileFolder"
 import { Message } from "./pages/Message"
 import { Welcome } from "./components/loaders/welcome"
+import { NewProject } from "./pages/NewProject"
+import { JoinProject } from "./pages/JoinProject"
 
 export const App=()=>{
 
@@ -40,32 +42,40 @@ export const App=()=>{
         element: <AppLayout/>,
         children: [
           {
-            path: "/",
+            path: "",
             element: <Home/>
           },
           {
-            path: "/projects",
+            path: "projects",
             element: <Projects/>
           },
           {
-            path: "/profile",
+            path: "profile",
             element: <Profile/>
           },
           {
-            path: "/projects/:id/:parentFolder/:folderID",
+            path: "projects/:id/:parentFolder/:folderID",
             element: <Repo/>
           },
           {
-            path: "/projects/file/:projectId/:parentFolder/:fileId/",
+            path: "projects/file/:projectId/:parentFolder/:fileId/",
             element: <File/>
           }, 
           {
-            path: "/new/:projectId/:grandParentFolder/:parentFolder",
+            path: "new/:projectId/:grandParentFolder/:parentFolder",
             element: <NewFileFolder/>
           },
           {
-            path: "/message/:projectId",
+            path: "message/:projectId",
             element: <Message/>
+          },
+          {
+            path: "projects/newProject",
+            element: <NewProject/>
+          },
+          {
+            path: "projects/joinProject",
+            element: <JoinProject/>
           }
         ]
       }

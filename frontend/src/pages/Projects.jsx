@@ -1,17 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import { useAuthStore } from "../store/useAuthStore"
 import moment, {} from "moment"
-import { NewProject } from "../components/UI/NewProject"
+import { NewProject } from "./NewProject"
 import { useEffect, useState } from "react"
 import { MdDelete } from "react-icons/md";
 import { Toaster } from "react-hot-toast"
-import { JoinProject } from "../components/UI/JoinProject"
 
 export const Projects=()=>{
 
     const {authUser,deleteProject}=useAuthStore()
-    const [showProject,setShowProject]=useState(false);
-    const [showJoin,setShowJoin]=useState(false);
     const [projects,setProjects]=useState([]);
     const navigate=useNavigate();
     useEffect(()=>{
@@ -24,9 +21,8 @@ export const Projects=()=>{
         if(authUser){
             setProjects(authUser.projects)
         }
-    },[])
+    },[authUser])
 
-    console.log(projects)
 
     const handleProjectSearch=(e)=>{
         console.log(e.target.value)
@@ -55,8 +51,8 @@ export const Projects=()=>{
                                 <input type="text" name="project" id="project" placeholder="Find a project.." onChange={handleProjectSearch} className="bg-[#1e2327] placeholder-zinc-600 text-zinc-600 px-2 py-0.5 text-sm outline-none w-full border-1 border-zinc-800 rounded"/>
                             </form>
                             <div className="flex gap-2">
-                                <button className="bg-sky-600 px-4 rounded-xl text-white" onClick={()=> setShowProject(true)}>New</button>
-                                <button className="bg-sky-600 px-4 rounded-xl text-white" onClick={()=> setShowJoin(true)}>Join</button>
+                                <NavLink to={"/projects/newProject"} className="bg-sky-600 px-4 rounded-xl text-white">New</NavLink>
+                                <NavLink to={"/projects/joinProject"} className="bg-sky-600 px-4 rounded-xl text-white">Join</NavLink>
                             </div>
                         </div>
                         <div className="py-8 px-16 flex flex-col gap-2 items-center">
@@ -88,8 +84,8 @@ export const Projects=()=>{
                     </div>
                 </div>
             </main>
-            <NewProject showProject={showProject} setShowProject={setShowProject}/>
-            <JoinProject showJoin={showJoin} setShowJoin={setShowJoin}/>
+            {/* <NewProject showProject={showProject} setShowProject={setShowProject}/> */}
+            {/* <JoinProject showJoin={showJoin} setShowJoin={setShowJoin}/> */}
             <Toaster/>
         </>
     )
