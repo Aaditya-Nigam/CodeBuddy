@@ -109,7 +109,8 @@ const deleteProject=async (req,res)=>{
             res.status(401).json({message: "No such project exists!!"});
             return ;
         }
-        await Folder.findOne({folderName: 'Root', projectId: id});
+        await Folder.findOneAndDelete({folderName: 'root', projectId: id});
+        await Project.findByIdAndDelete(id)
         await User.updateMany({projects: id}, {$pull: {projects: id}});
         res.status(201).json({message: "Project deleted successfully!!"})
     } catch (error) {

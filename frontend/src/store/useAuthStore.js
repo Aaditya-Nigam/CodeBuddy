@@ -118,6 +118,7 @@ export const useAuthStore=create((set,get)=>({
             })
             authUser.projects=updatedProjects
             set({authUser: authUser})
+            toast.success(res.data.message)
         }catch(error){
             toast.error(error.response.data.message)
         }
