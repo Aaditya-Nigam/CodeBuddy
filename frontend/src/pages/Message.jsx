@@ -3,9 +3,10 @@ import { useMessgageStore } from "../store/useMessageStore"
 import { useAuthStore } from "../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast"
 import { Loader } from "../components/UI/Loader"
-import { useParams } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 import { MdGroups2 } from "react-icons/md";
 import chatBg from "/chatBg.avif"
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 export const Message=()=>{
 
@@ -54,9 +55,14 @@ export const Message=()=>{
     return (
         <main className={`bg-[url(/chatBg.avif)] bg-contain fixed top-0 w-screen h-screen flex items-center justify-center max-[600px]:hidden`} >
             <div className="w-[80%] rounded-lg h-full text-white grid grid-rows-[1fr_16fr_1fr]" onClick={(e)=> e.stopPropagation()}>            
-                <div className="bg-black flex items-center px-2 rounded-3xl gap-3">
-                    <MdGroups2 className="text-3xl border-2 p-0.5 rounded-[50%]"/>
-                    <h1 className="text-2xl text-white">testVersion2</h1>
+                <div className="bg-black flex items-center justify-between px-2 rounded-3xl gap-3">
+                    <div className="flex gap-3">
+                        <MdGroups2 className="text-3xl border-2 p-0.5 rounded-[50%]"/>
+                        <h1 className="text-2xl text-white">testVersion2</h1>
+                    </div>
+                    <NavLink to={'/projects'}>
+                        <IoArrowBackCircleOutline className="text-3xl cursor-pointer"/>
+                    </NavLink>
                 </div>
                 <div className="overflow-auto messageContainer p-2 flex flex-col gap-2">
                     {

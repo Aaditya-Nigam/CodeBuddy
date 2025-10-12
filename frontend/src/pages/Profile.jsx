@@ -7,8 +7,10 @@ import { LuLoader } from "react-icons/lu";
 import moment from "moment"
 
 export const Profile=()=>{
-    const {authUser,logout,changeProfile,isUpdatingImage}=useAuthStore()
+    const {authUser,logout,changeProfile,isUpdatingImage,updateSkill}=useAuthStore()
     const [image,setImage]=useState(null)
+    const [showInputSkill,setShowInputSkill]=useState(false)
+    const [skill,setSkill]=useState("")
     const navigate=useNavigate();
     useEffect(()=>{
         if(!authUser){
@@ -31,6 +33,19 @@ export const Profile=()=>{
             setImage(base64ImageUrl)
             changeProfile({profilePic: base64ImageUrl})
         }
+    }
+
+    const handleFormSubmit=async (e)=>{
+        e.preventDefault();
+        if(skill.trim().length==0){
+            setSkill("")
+            toast.error('Enter valid skill!')
+            return ;
+        }
+        const data={skill: skill.trim()}
+        await updateSkill(data)
+        setShowInputSkill(false)
+        setSkill("")
     }
 
     return (
@@ -71,12 +86,19 @@ export const Profile=()=>{
                         </div>
                         <div className="flex gap-4 text-white">
                             <p className="text-zinc-400 text-lg max-[650px]:text-base">Skills</p>
-                            <div className="flex gap-4 w-[250px] flex-wrap">
-                                {
-                                    authUser?.skills.map((skill,index)=>{
-                                        return <p key={index} className="bg-zinc-800 px-4 py-0.5 rounded text-zinc-400 border-1 border-zinc-700">{skill}</p>
-                                    })
-                                }
+                            <div className="flex flex-col gap-2">
+                                <div className="flex gap-4 w-[350px] flex-wrap">
+                                    {
+                                        authUser?.skills.map((skill,index)=>{
+                                            return <p key={index} className="bg-zinc-800 px-4 py-0.5 rounded text-zinc-400 border-1 border-zinc-700">{skill}</p>
+                                        })
+                                    }
+                                    <button className={`bg-zinc-800 px-2 rounded-md border-1 border-zinc-600 cursor-pointer hover:bg-zinc-700 transition duration-150 ${showInputSkill?'hidden':''}`} onClick={()=> setShowInputSkill(true)}>+</button>
+                                </div>
+                                <form onSubmit={handleFormSubmit} className={`flex gap-3 ${showInputSkill?'':'hidden'}`}>
+                                    <input type="text" name="skill" id="skill" value={skill} onChange={(e)=> setSkill(e.target.value)} className="bg-zinc-800 outline-none px-2 py-1 text-sm rounded-md" placeholder="Enter skill" />
+                                    <button className="bg-sky-600 text-sm px-2 rounded-xl cursor-pointer hover:bg-sky-700">Add</button>
+                                </form>
                             </div>
                         </div>
                     </div>

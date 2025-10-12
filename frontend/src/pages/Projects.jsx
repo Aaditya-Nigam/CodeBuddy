@@ -48,7 +48,7 @@ export const Projects=()=>{
             <main className="bg-[#0d1117] h-[91.4vh] max-[850px]:h-fit max-[850px]:min-h-[91.4vh]">
                 <div className="w-[80%] mx-auto min-[850px]:h-[90vh] grid grid-cols-[1fr_3fr] max-[850px]:flex max-[850px]:flex-col">
                     <div className="flex flex-col justify-center items-center gap-4 border-r-1 border-[#1e232785] my-8 px-2 max-[850px]:border-0">
-                        <img src={authUser?.profilePic || "./avatar.png"} alt="" className="w-[200px] h-[200px] object-cover border-3 border-sky-600 rounded-[50%] max-[850px]:w-[100px]"/>
+                        <img src={authUser?.profilePic || "./avatar.png"} alt="" className="w-[200px] aspect-square object-cover border-3 border-sky-600 rounded-[50%] max-[850px]:w-[150px]"/>
                         <div className="flex flex-col items-center">
                             <p className="text-zinc-400 text-xl max-[850px]:text-lg">{authUser?.fullName}</p>
                             <p className="text-zinc-600 text-sm max-[850px]:text-xs">{authUser.userName}</p>
