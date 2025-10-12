@@ -7,7 +7,6 @@ import {useFolderStore} from "../store/useFolderStore";
 import { useFileStore } from "../store/useFileStore";
 
 export const NewFileFolder=()=>{
-    console.log("khkjhkj")
     
     const {projectId,parentFolder,grandParentFolder}=useParams()
     const {createFile,isCreatingFile}=useFileStore()

@@ -15,7 +15,6 @@ export const Profile=()=>{
             navigate("/login")
         }
     },[authUser])
-    console.log(authUser)
 
     const handleProfileChange=(e)=>{
         const f=e.target.files[0].name;

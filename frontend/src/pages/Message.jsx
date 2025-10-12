@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast"
 import { Loader } from "../components/UI/Loader"
 import { useParams } from "react-router-dom"
 import { MdGroups2 } from "react-icons/md";
-import chatBg from "/chatBg.avif"
+import { Welcome } from "../components/loaders/Welcome"
 
 export const Message=()=>{
 
@@ -24,7 +24,7 @@ export const Message=()=>{
     },[reload,projectId])
 
     if(isLoadingMessage){
-        return <Loader/>
+        return <Welcome/>
     }
 
     const checkFormData=()=>{

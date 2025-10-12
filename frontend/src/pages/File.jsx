@@ -3,7 +3,7 @@ import { useProjectStore } from "../store/useProjectStore";
 import { RxAvatar } from "react-icons/rx";
 import { useEffect, useRef } from "react";
 import { Editor } from "../components/UI/Editor";
-import { Loader } from "../components/UI/Loader";
+import { Welcome } from "../components/loaders/Welcome";
 
 export const File = () => {
   const { project, loadProject } = useProjectStore();
@@ -18,7 +18,7 @@ export const File = () => {
   }, [projectId, loadProject]);
 
   if (!project) {
-    return <Loader/>;
+    return <Welcome/>;
   }
 
   return (
