@@ -13,6 +13,7 @@ import { indentUnit } from "@codemirror/language";
 // import { bracketMatching } from "codemirror/matchbrackets"; 
 
 import { useFileStore } from "../../store/useFileStore";
+import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 
 export const Editor = ({ fileId }) => {
@@ -32,17 +33,17 @@ export const Editor = ({ fileId }) => {
     }
   }, [file]);
 
-  useEffect(()=>{
-    socket.emit("joinRoom", {fileId});
+  // useEffect(()=>{
+  //   socket.emit("joinRoom", {fileId});
 
-    socket.on("codeUpdate", (code)=>{
-      setCode(code);
-    })
+  //   socket.on("codeUpdate", (code)=>{
+  //     setCode(code);
+  //   })
 
-    return ()=>{
-      socket.off("codeUpdate")
-    }
-  },[fileId])
+  //   return ()=>{
+  //     socket.off("codeUpdate")
+  //   }
+  // },[fileId])
 
   if (isLoading) {
     return <h1>Loading..</h1>;
