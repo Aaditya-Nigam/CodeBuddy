@@ -22,9 +22,11 @@ export const useFileStore=create((set)=> ({
         }
     },
 
-    getFile: async(id)=>{
+    getFile: async({fileId,ind})=>{
         try {
-            const res=await axiosInstance.get(`/file/file/${id}`)
+            console.log(fileId)
+            console.log(ind)
+            const res=await axiosInstance.get(`/file/file/${fileId}/${ind}`)
             const data=res.data;
             set({file: data})
         } catch (error) {
@@ -47,6 +49,29 @@ export const useFileStore=create((set)=> ({
             console.log(error.message)
         }finally{
             set({isSaving: false});
+        }
+    },
+
+    createCloneFile: async(formData)=>{
+        try {
+            const res=await axiosInstance.post("/file/createCloneFile",formData)
+            const data=res.data
+            console.log(data)
+            return data
+        } catch (error) {
+            console.log("Error in useFileStore createCloneFile: ",error)
+        }
+    }, 
+
+    getClone: async(formData)=>{
+        try {
+            const res=await axiosInstance.get(`/file/cloneFile/${formData.fileId}/${formData.userId}`)
+            const data=res.data
+            return data
+        } catch (error) {
+            console.log("Error in getClone useFileStore: ",error)
+            toast.error(error.response.data.message)
+            return null;
         }
     }
 }))

@@ -15,6 +15,7 @@ import { Message } from "./pages/Message"
 import { Welcome } from "./components/loaders/Welcome"
 import { NewProject } from "./pages/NewProject"
 import { JoinProject } from "./pages/JoinProject"
+import { CloneFile } from "./pages/CloneFile"
 
 export const App=()=>{
 
@@ -60,6 +61,10 @@ export const App=()=>{
           {
             path: "projects/file/:projectId/:parentFolder/:fileId/",
             element: <File/>
+          }, 
+          {
+            path: "projects/cloneFile/:projectId/:parentFolder/:fileId/:cloneId",
+            element: <CloneFile/>
           }, 
           {
             path: "new/:projectId/:grandParentFolder/:parentFolder",

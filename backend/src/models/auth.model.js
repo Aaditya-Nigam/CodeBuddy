@@ -29,6 +29,10 @@ const userSchema=new mongoose.Schema({
     }],
     skills: [{
         type: String
+    }],
+    pullRequests: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PullRequest'
     }]
 }, {timestamps: true})
 

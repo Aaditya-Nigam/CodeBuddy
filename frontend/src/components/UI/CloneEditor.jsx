@@ -17,24 +17,22 @@ import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 
-export const Editor = ({ fileId,projectId,parentFolder }) => {
+export const CloneEditor = ({ fileId,projectId,parentFolder,cloneId }) => {
   const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone} = useFileStore();
   const {authUser}=useAuthStore()
   const [code, setCode] = useState("// Write your code here\n");
-  const [cloneId,setCloneId]=useState(null)
-  // const {socket}=useAuthStore();
+//   const [cloneId,setCloneId]=useState(null)
 
-  console.log(fileId)
   useEffect(() => {
-      getFile({fileId,ind:0});
-
-    cloneFile()
+    getFile({fileId: cloneId,ind:1});
   }, [fileId, getFile]);
   
-  const cloneFile=async()=>{
-    const clone=await getClone({fileId:fileId, userId:authUser._id})
-    setCloneId(clone._id)
-  }
+//   const cloneFile=async()=>{
+//     if(editable==false){
+//       const clone=await getClone({fileId:fileId, userId:authUser._id})
+//       setCloneId(clone._id)
+//     }
+//   }
 
   useEffect(() => {
     if (file?.content && file.content !== code) {
@@ -42,17 +40,6 @@ export const Editor = ({ fileId,projectId,parentFolder }) => {
     }
   }, [file]);
 
-  // useEffect(()=>{
-  //   socket.emit("joinRoom", {fileId});
-
-  //   socket.on("codeUpdate", (code)=>{
-  //     setCode(code);
-  //   })
-
-  //   return ()=>{
-  //     socket.off("codeUpdate")
-  //   }
-  // },[fileId])
 
   if (isLoading) {
     return <h1>Loading..</h1>;
@@ -71,19 +58,6 @@ export const Editor = ({ fileId,projectId,parentFolder }) => {
     }
   }
 
-  const handleFork=async ()=>{
-    try {
-      const formData={
-        fileId: fileId,
-        userId: authUser._id
-      }
-      const clone=await createCloneFile(formData)
-      setCloneId(clone._id)
-      console.log(clone)
-    } catch (error) {
-      toast.error(error.message);
-    }
-  }
 
   const langReq=(str)=>{
     if(str==='python'){
@@ -108,26 +82,26 @@ export const Editor = ({ fileId,projectId,parentFolder }) => {
 
   const handleCodeChange=(val)=>{
     setCode(val);
-    // socket.emit("codeChange", {fileId,code: val});
   }
 
   return (
     <>
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
         <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500">{file.fileName}</h1>
-        <div>
-          <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handleFork} disabled={isSaving}>Fork</button>:
+        <div className="flex gap-2">
+            <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handleSave} disabled={isSaving}>Push</button>
+            <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handleSave} disabled={isSaving}>{isSaving?'Saving':'Save'}</button>
         </div>
       </div>
       <div className="bg-[#0d1117] px-2 pt-1 text-white text-sm flex gap-2">
-        <div className={`px-2 rounded-t-md bg-[#282c34] cursor-pointer`} >
+        <NavLink to={`/projects/file/${projectId}/${parentFolder}/${fileId}`} className={`px-2 rounded-t-md bg-[#ffffff50]`}>
           Main
-        </div>
+        </NavLink>
         {
           cloneId?
-            <NavLink to={`/projects/cloneFile/${projectId}/${parentFolder}/${fileId}/${cloneId}`} className={`px-2 rounded-t-md bg-[#ffffff50]`}>
+            <div className={`px-2 rounded-t-md bg-[#282c34] cursor-pointer`} disabled={true}>
               Repo
-            </NavLink>:<></>
+            </div>:<></>
         }
       </div>
       <CodeMirror
@@ -135,7 +109,6 @@ export const Editor = ({ fileId,projectId,parentFolder }) => {
         extensions={[langReq(file.language), basicSetup,autocompletion(),closeBrackets(),indentUnit.of("    ")]}
         onChange={handleCodeChange}
         theme="dark"
-        editable={false}
         />
         <Toaster/>
     </>

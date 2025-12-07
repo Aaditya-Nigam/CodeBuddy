@@ -1,6 +1,8 @@
 const Project = require("../models/project.model")
 const File=require("../models/file.model")
 const Folder = require("../models/folder.model")
+const CloneFile = require("../models/cloneFile.model")
+const User = require("../models/auth.model")
 
 const createFile=async (req,res)=>{
     try {
@@ -62,13 +64,22 @@ const updateFile=async (req,res)=>{
 
 const getFile=async (req,res)=>{
     try {
-        const {id}=req.params
-        const file=await File.findById(id);
-        if(!file){
-            res.status(401).json({message: "No such file exists!!"})
-            return ;
+        const {id,editable}=req.params 
+        if(editable==0){
+            const file=await File.findById(id);
+            if(!file){
+                res.status(401).json({message: "No such file exists!!"})
+                return ;
+            }
+            res.status(201).json(file)
+        }else{
+            const file=await CloneFile.findById(id);
+            if(!file){
+                res.status(401).json({message: "No such file exists!!"})
+                return ;
+            }
+            res.status(201).json(file)
         }
-        res.status(201).json(file)
     } catch (error) {
         res.status(401).json({messgae: "Internal server error!!"});
         console.log("error in get file controller: ",error.message)
@@ -92,9 +103,61 @@ const deleteFile=async (req,res)=>{
     }
 }
 
+
+const createCloneFile=async (req,res)=>{
+    try {
+        const {fileId,userId}=req.body
+        if(!fileId || !userId){
+            res.status(401).json({message: "Fields are missing!"})
+            return 
+        }
+        const original=await File.findById(fileId)
+        if(!original){
+            res.status(401).json({message: "File is not present!"})
+            return ;
+        }
+        const user=await User.findById(userId).select('-password')
+        if(!user){
+            res.status(401).json({message: "User is missing!"})
+            return 
+        }
+        const cloneFile=await CloneFile({
+            originalFileId: fileId,
+            fileName: original.fileName,
+            content: original.content,
+            language: original.language,
+            projectId: original.projectId,
+            userId: userId
+        })
+        await cloneFile.save()
+        // console.log(cloneFile)
+        res.status(201).json(cloneFile)
+    } catch (error) {
+        console.log("Error: ",error.message)
+        res.status(401).json({message: error.message})
+    }
+}
+
+const getCloneFile=async (req,res)=>{
+    try {
+        const {fileId,userId}=req.params
+        const file=await CloneFile.findOne({originalFileId: fileId, userId: userId})
+        if(!file){
+            res.status(201).json(null)
+            return ;
+        }
+        res.status(201).json(file)
+    } catch (error) {
+        console.log("Error in getCloneFile: ",error)
+        res.status(401).json({message: "Internal server error!"})
+    }
+}
+
 module.exports={
     createFile,
     updateFile,
     getFile,
-    deleteFile
+    deleteFile,
+    createCloneFile,
+    getCloneFile
 }

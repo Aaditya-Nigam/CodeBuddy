@@ -1,7 +1,8 @@
 const generateToken = require("../lib/auth");
 const v2 = require("../lib/cloudinary");
 const User = require("../models/auth.model");
-const bcrypt=require("bcrypt")
+const bcrypt=require("bcrypt");
+const File = require("../models/file.model");
 
 const authSignUp=async (req,res)=>{
     try {

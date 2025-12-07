@@ -4,10 +4,11 @@ import { RxAvatar } from "react-icons/rx";
 import { useEffect, useRef } from "react";
 import { Editor } from "../components/UI/Editor";
 import { Welcome } from "../components/loaders/Welcome";
+import { CloneEditor } from "../components/UI/CloneEditor";
 
-export const File = () => {
+export const CloneFile = () => {
   const { project, loadProject } = useProjectStore();
-  const { projectId, fileId, parentFolder } = useParams();
+  const { projectId, fileId, parentFolder, cloneId } = useParams();
   const prevProjectId = useRef(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export const File = () => {
       </div>
 
       <div className="editor-container h-full overflow-auto bg-[#282c34]">
-        {fileId ? <Editor fileId={fileId} projectId={projectId} parentFolder={parentFolder} /> : <h1>No file selected</h1>}
+        {fileId ? <CloneEditor fileId={fileId} projectId={projectId} parentFolder={parentFolder} cloneId={cloneId} /> : <h1>No file selected</h1>}
       </div>
     </div>
   );
