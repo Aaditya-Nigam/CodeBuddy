@@ -3,12 +3,13 @@ import { TbLockPassword } from "react-icons/tb";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast"
 import { useAuthStore } from "../store/useAuthStore";
 
 export const Login=()=>{
     const {authUser,login,isLoggingIn}=useAuthStore()
+    const ref=useRef(null);
     const [user,setUser]=useState({
         email: "",
         password: ""
@@ -19,6 +20,10 @@ export const Login=()=>{
             navigate("/")
         }
     },[authUser])
+
+    useEffect(()=>{
+        ref.current.focus()
+    })
 
     const [showPassword,setShowPassword]=useState(false)
 
@@ -63,7 +68,7 @@ export const Login=()=>{
                             <label htmlFor="email" className="text-zinc-400 max-[500px]:text-sm">Email</label>
                             <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none bg-[#261634]">
                                 <MdOutlineEmail className="text-lg"/>
-                                <input type="email" name="email" id="email" value={user.email} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="aaditya@email.com" className="w-full outline-none max-[500px]:text-sm"/>
+                                <input type="email" ref={ref} name="email" id="email" value={user.email} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="aaditya@email.com" className="w-full outline-none max-[500px]:text-sm"/>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1 w-full">

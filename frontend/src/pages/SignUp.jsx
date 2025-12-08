@@ -4,12 +4,13 @@ import { TbLockPassword } from "react-icons/tb";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast"
 import { useAuthStore } from "../store/useAuthStore";
 
 export const SignUp=()=>{
     const {authUser,signup,isSigningUp}=useAuthStore()
+    const ref=useRef(null)
     const [user,setUser]=useState({
         fullName: "",
         userName: "",
@@ -24,6 +25,10 @@ export const SignUp=()=>{
     },[authUser])
 
     const [showPassword,setShowPassword]=useState(false)
+
+    useEffect(()=>{
+        ref.current.focus()
+    })
 
     const checkFormData=()=>{
         if(user.fullName.trim().length==0){
@@ -76,7 +81,7 @@ export const SignUp=()=>{
                             <label htmlFor="fullName" className="text-zinc-400 max-[500px]:text-sm">Full Name</label>
                             <div className="flex items-center gap-2 px-2 py-1 text-sm text-zinc-300 border-1 border-zinc-600 rounded w-full outline-none bg-[#261634]">
                                 <FaRegUser className="text-sm"/>
-                                <input type="text" name="fullName" id="fullName" value={user.fullName} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="Aaditya Nigam" className="w-full outline-none max-[500px]:text-sm"/>
+                                <input type="text" ref={ref} name="fullName" id="fullName" value={user.fullName} onChange={(e)=> setUser({...user,[e.target.name]: e.target.value})} placeholder="Aaditya Nigam" className="w-full outline-none max-[500px]:text-sm"/>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1 w-full">
