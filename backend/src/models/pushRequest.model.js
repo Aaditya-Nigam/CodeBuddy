@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 
-const pullRequestSchema=new mongoose.Schema({
+const pushRequestSchema=new mongoose.Schema({
     originalFileId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'File',
@@ -10,8 +10,10 @@ const pullRequestSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'
     },
-    content: {
-        type: String 
+    cloneFileId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CloneFile',
+        required: true
     },
     status: {
         type: String,
@@ -27,9 +29,12 @@ const pullRequestSchema=new mongoose.Schema({
         required: true 
     },
     description: {
-        ttype: String
+        type: String
     },
     mergedOn: {
         type: Date
     }
 },{timestamps: true})
+
+const PushRequest=new mongoose.model('PushRequest',pushRequestSchema)
+module.exports=PushRequest

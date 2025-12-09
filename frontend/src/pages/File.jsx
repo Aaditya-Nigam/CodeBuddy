@@ -7,7 +7,7 @@ import { Welcome } from "../components/loaders/Welcome";
 
 export const File = () => {
   const { project, loadProject } = useProjectStore();
-  const { projectId, fileId, parentFolder } = useParams();
+  const { projectId, fileId} = useParams();
   const prevProjectId = useRef(null);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const File = () => {
       </div>
 
       <div className="editor-container h-full overflow-auto bg-[#282c34]">
-        {fileId ? <Editor fileId={fileId} projectId={projectId} parentFolder={parentFolder} /> : <h1>No file selected</h1>}
+        {fileId ? <Editor fileId={fileId} projectId={projectId} /> : <h1>No file selected</h1>}
       </div>
     </div>
   );

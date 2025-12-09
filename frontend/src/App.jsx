@@ -16,6 +16,7 @@ import { Welcome } from "./components/loaders/Welcome"
 import { NewProject } from "./pages/NewProject"
 import { JoinProject } from "./pages/JoinProject"
 import { CloneFile } from "./pages/CloneFile"
+import {PushRequest} from "./pages/PushRequest"
 
 export const App=()=>{
 
@@ -59,11 +60,11 @@ export const App=()=>{
             element: <Repo/>
           },
           {
-            path: "projects/file/:projectId/:parentFolder/:fileId/",
+            path: "projects/file/:projectId/:fileId/",
             element: <File/>
           }, 
           {
-            path: "projects/cloneFile/:projectId/:parentFolder/:fileId/:cloneId",
+            path: "projects/cloneFile/:projectId/:fileId/:cloneId",
             element: <CloneFile/>
           }, 
           {
@@ -81,6 +82,10 @@ export const App=()=>{
           {
             path: "projects/joinProject",
             element: <JoinProject/>
+          },
+          {
+            path: "push/:projectId/:fileId/:cloneId",
+            element: <PushRequest/>
           }
         ]
       }

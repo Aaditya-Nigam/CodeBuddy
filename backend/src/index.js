@@ -9,11 +9,12 @@ const messageRouter=require("./routers/message.router")
 const fileRouter=require("./routers/file.router")
 const taskRouter=require("./routers/task.router")
 const folderRoute=require("./routers/folder.router")
+const pushRequestRouter=require("./routers/pushRequest.router")
 const {app,server}=require("./lib/socket");
 const path=require("path")
 dotenv.config()
 
-const _dirname=path.resolve();
+const _dirname=path.resolve(); 
 
 app.use(express.json({limit: "50mb"}))
 app.use(cookieParser())
@@ -27,6 +28,7 @@ app.use("/api/message",messageRouter)
 app.use("/api/file",fileRouter)
 app.use("/api/task",taskRouter)
 app.use("/api/folder",folderRoute)
+app.use("/api/push",pushRequestRouter)
 
 if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(_dirname,"../frontend/dist")))

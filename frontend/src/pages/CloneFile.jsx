@@ -8,7 +8,7 @@ import { CloneEditor } from "../components/UI/CloneEditor";
 
 export const CloneFile = () => {
   const { project, loadProject } = useProjectStore();
-  const { projectId, fileId, parentFolder, cloneId } = useParams();
+  const { projectId, fileId, cloneId } = useParams();
   const prevProjectId = useRef(null);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const CloneFile = () => {
       </div>
 
       <div className="editor-container h-full overflow-auto bg-[#282c34]">
-        {fileId ? <CloneEditor fileId={fileId} projectId={projectId} parentFolder={parentFolder} cloneId={cloneId} /> : <h1>No file selected</h1>}
+        {fileId ? <CloneEditor fileId={fileId} projectId={projectId} cloneId={cloneId} /> : <h1>No file selected</h1>}
       </div>
     </div>
   );

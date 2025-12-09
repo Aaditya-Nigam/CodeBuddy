@@ -194,7 +194,7 @@ export const Repo=()=>{
                                             <div className="flex gap-3 items-center">
                                                 <ImFilesEmpty className="text-xl"/>
                                                 <div>
-                                                    <NavLink to={`/projects/file/${project._id}/${folder._id}/${file._id}`} className="text-md">{file.fileName?.split('.')[0]}&nbsp;&nbsp;<span className="text-xs text-zinc-700">{moment(file.createdAt).fromNow()}</span></NavLink>
+                                                    <NavLink to={`/projects/file/${project._id}/${file._id}`} className="text-md">{file.fileName?.split('.')[0]}&nbsp;&nbsp;<span className="text-xs text-zinc-700">{moment(file.createdAt).fromNow()}</span></NavLink>
                                                     <p className="text-sm text-zinc-400">Language: <span className="text-zinc-600">{file.language}</span></p>
                                                 </div>
                                             </div>

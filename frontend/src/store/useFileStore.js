@@ -73,5 +73,18 @@ export const useFileStore=create((set)=> ({
             toast.error(error.response.data.message)
             return null;
         }
+    },
+
+    createPushRequest: async(formData)=>{
+        try {
+            const res=await axiosInstance.post("/push/createPushRequest",formData)
+            const data=res.data 
+            toast.success("Push request sent!")
+            return true
+        } catch (error) {
+            console.log("Error in createPushRequest useFileStore: ",error)            
+            toast.error(error.response.data.message)
+            return false
+        }
     }
 }))

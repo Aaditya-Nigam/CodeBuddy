@@ -17,7 +17,7 @@ import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 
-export const Editor = ({ fileId,projectId,parentFolder }) => {
+export const Editor = ({ fileId,projectId }) => {
   const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone} = useFileStore();
   const {authUser}=useAuthStore()
   const [code, setCode] = useState("// Write your code here\n");
@@ -125,7 +125,7 @@ export const Editor = ({ fileId,projectId,parentFolder }) => {
         </div>
         {
           cloneId?
-            <NavLink to={`/projects/cloneFile/${projectId}/${parentFolder}/${fileId}/${cloneId}`} className={`px-2 rounded-t-md bg-[#ffffff50]`}>
+            <NavLink to={`/projects/cloneFile/${projectId}/${fileId}/${cloneId}`} className={`px-2 rounded-t-md bg-[#ffffff50]`}>
               Repo
             </NavLink>:<></>
         }
