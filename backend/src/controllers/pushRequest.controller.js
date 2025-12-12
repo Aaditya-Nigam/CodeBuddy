@@ -48,6 +48,41 @@ const createPushRequest=async(req,res)=>{
     }
 }
 
+const getPushRequests=async(req,res)=>{
+    try {
+        const {fileId}=req.params
+        const userId=req.user._id
+        const requests=await PushRequest.find({originalFileId: fileId, userId}).populate({path: 'userId'})
+        res.status(201).json(requests)
+    } catch (error) {
+        console.log("Error in getPushRequests controller: ",error)
+        res.status(401).json({message: "Internal serever error"})
+    }
+}
+
+const deleteRequest=async(req,res)=>{
+    try {
+        const {requestId}=req.params
+        const userId=String(req.user._id);
+        const request=await PushRequest.findById(requestId)
+        if(!request){
+            res.status(401).json({message: "Inavlid RequestId!"})
+            return ;
+        }
+        if(request.userId!=userId){
+            res.status(401).json({mesage: "Unauthorized user!"});
+            return ;
+        }
+        await PushRequest.findByIdAndDelete(requestId)
+        res.status(201).json({message: "Request deleted successfully!"})
+    } catch (error) {
+        console.log("Error in deleteRequest controller: ",error)
+        res.status(401).json({message: "Internal server error!"})
+    }
+}
+
 module.exports={
-    createPushRequest
+    createPushRequest,
+    getPushRequests,
+    deleteRequest
 }

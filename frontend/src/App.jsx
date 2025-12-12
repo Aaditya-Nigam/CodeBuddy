@@ -17,6 +17,7 @@ import { NewProject } from "./pages/NewProject"
 import { JoinProject } from "./pages/JoinProject"
 import { CloneFile } from "./pages/CloneFile"
 import {PushRequest} from "./pages/PushRequest"
+import { GetPushRequests } from "./pages/GetPushRequests"
 
 export const App=()=>{
 
@@ -86,6 +87,10 @@ export const App=()=>{
           {
             path: "push/:projectId/:fileId/:cloneId",
             element: <PushRequest/>
+          },
+          {
+            path: "pushRequests/file/:fileId",
+            element: <GetPushRequests/>
           }
         ]
       }

@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { useFileStore } from "../store/useFileStore"
 import { useAuthStore } from "../store/useAuthStore"
 import { Toaster } from "react-hot-toast"
+import { usePushPullStore } from "../store/usePushPullStore"
 
 export const PushRequest=()=>{
 
@@ -11,7 +11,7 @@ export const PushRequest=()=>{
         title: "",
         description: ""
     })
-    const {createPushRequest}=useFileStore()
+    const {createPushRequest}=usePushPullStore()
     const {authUser}=useAuthStore()
     const navigate=useNavigate()
 
