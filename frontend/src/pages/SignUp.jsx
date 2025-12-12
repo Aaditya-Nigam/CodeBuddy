@@ -28,7 +28,7 @@ export const SignUp=()=>{
 
     useEffect(()=>{
         ref.current.focus()
-    })
+    },[])
 
     const checkFormData=()=>{
         if(user.fullName.trim().length==0){

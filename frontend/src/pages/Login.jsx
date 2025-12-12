@@ -23,7 +23,7 @@ export const Login=()=>{
 
     useEffect(()=>{
         ref.current.focus()
-    })
+    },[])
 
     const [showPassword,setShowPassword]=useState(false)
 
