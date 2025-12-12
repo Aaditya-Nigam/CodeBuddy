@@ -43,5 +43,16 @@ export const usePushPullStore=create((set,get)=>({
             console.log("Error in deleteRequest usePushPullStore: ",error)
             toast.error(error.response.data.message)
         }
+    },
+
+    getAllPushRequests: async(projectId)=>{
+        try {
+            const res=await axiosInstance.get(`/push/getAllPushRequests/${projectId}`)
+            const data=res.data
+            set({requests: data})
+        } catch (error) {
+            console.log("Error in getAllPushRequest usePushPullStore: ",error)
+            toast.error(error.response.data.message)
+        }
     }
 }))

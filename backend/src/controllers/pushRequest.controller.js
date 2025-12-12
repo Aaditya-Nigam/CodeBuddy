@@ -81,8 +81,21 @@ const deleteRequest=async(req,res)=>{
     }
 }
 
+const getAllPushRequests=async (req,res)=>{
+    try {
+        const {projectId}=req.params
+        const userId=req.user._id
+        const requests=await PushRequest.find({projectId, userId}).populate({path: 'userId'}).populate({path: 'originalFileId'})
+        res.status(201).json(requests)
+    } catch (error) {
+        console.log("Error in getAllPushRequests controller: ",error)
+        res.status(401).json({message: "Internal serever error"})
+    }
+}
+
 module.exports={
     createPushRequest,
     getPushRequests,
-    deleteRequest
+    deleteRequest,
+    getAllPushRequests
 }

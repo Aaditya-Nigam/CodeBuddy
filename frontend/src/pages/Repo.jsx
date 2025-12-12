@@ -160,6 +160,7 @@ export const Repo=()=>{
                             <NavLink to={`/message/${id}`}>
                                 <TbMessage2Filled className="text-xl cursor-pointer max-[700px]:text-base max-[600px]:hidden"/>
                             </NavLink>
+                            <NavLink to={`/pushRequests/project/${project._id}`} className="px-4 border-2 border-white rounded text-white  hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>
                         </div>
                         <div className="grid grid-cols-[10fr_1fr] gap-4 justifycenter py-4">
                             <form>
