@@ -140,7 +140,8 @@ const createCloneFile=async (req,res)=>{
 
 const getCloneFile=async (req,res)=>{
     try {
-        const {fileId,userId}=req.params
+        const {fileId}=req.params
+        const userId=req.user._id
         const file=await CloneFile.findOne({originalFileId: fileId, userId: userId})
         if(!file){
             res.status(201).json(null)
