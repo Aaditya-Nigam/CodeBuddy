@@ -19,6 +19,8 @@ import { CloneFile } from "./pages/CloneFile"
 import {PushRequest} from "./pages/PushRequest"
 import { GetPushRequests } from "./pages/GetPushRequests"
 import { GetAllPushRequests } from "./pages/GetAllPushRequests"
+import { AdminAllRequests } from "./pages/AdminAllRequests"
+import { ViewOriginalVsChange } from "./pages/ViewOriginalVsChange"
 
 export const App=()=>{
 
@@ -96,6 +98,14 @@ export const App=()=>{
           {
             path: "pushRequests/project/:projectId",
             element: <GetAllPushRequests/>
+          },
+          {
+            path: "admin/project/:projectId",
+            element: <AdminAllRequests/>
+          },
+          {
+            path: "/merge/:requestId",
+            element: <ViewOriginalVsChange/>
           }
         ]
       }

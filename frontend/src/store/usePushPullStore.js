@@ -54,5 +54,27 @@ export const usePushPullStore=create((set,get)=>({
             console.log("Error in getAllPushRequest usePushPullStore: ",error)
             toast.error(error.response.data.message)
         }
+    },
+
+    getAllAdminRequests: async(projectId)=>{
+        try {
+            const res=await axiosInstance.get(`/push/getAlladminRequests/${projectId}`)
+            const data=res.data
+            return data;
+        } catch (error) {
+            console.log("Error in getAllPushRequest usePushPullStore: ",error)
+            toast.error(error.response.data.message)
+        }
+    },
+
+    getRequest: async(requestId)=>{
+        try {
+            const res=await axiosInstance.get(`/push/getRequest/${requestId}`)
+            const data=res.data
+            return data
+        } catch (error) {
+            console.log("Error in getRequest: ",error)
+            toast.error(error.response.data.message)
+        }
     }
 }))

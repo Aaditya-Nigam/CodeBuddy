@@ -93,9 +93,37 @@ const getAllPushRequests=async (req,res)=>{
     }
 }
 
+const getAllAdminRequests=async (req,res)=>{
+    try {
+        const {projectId}=req.params
+        const requests=await PushRequest.find({projectId}).populate({path: 'userId'}).populate({path: 'originalFileId'})
+        res.status(201).json(requests)
+    } catch (error) {
+        console.log("Error in getAllPushRequests controller: ",error)
+        res.status(401).json({message: "Internal serever error"})
+    }
+}
+
+const getRequest=async (req,res)=>{
+    try {
+        const {requestId}=req.params
+        const request=await PushRequest.findById(requestId).populate({path: "originalFileId"}).populate({path: "userId"})
+        if(!request){
+            res.status(401).json({message: "invalid requestId!"})
+            return ;
+        }
+        res.status(201).json(request) 
+    } catch (error) {
+        console.log("Error in getRequest controller: ",error)
+        res.status(401).json({message: "Internal server error!"})
+    }
+}
+
 module.exports={
     createPushRequest,
     getPushRequests,
     deleteRequest,
-    getAllPushRequests
+    getAllPushRequests,
+    getAllAdminRequests,
+    getRequest
 }

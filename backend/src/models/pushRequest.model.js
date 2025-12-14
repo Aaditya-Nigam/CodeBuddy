@@ -33,6 +33,9 @@ const pushRequestSchema=new mongoose.Schema({
     },
     mergedOn: {
         type: Date
+    },
+    content: {
+        type: String
     }
 },{timestamps: true})
 

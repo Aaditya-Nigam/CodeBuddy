@@ -17,7 +17,8 @@ import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 
-export const Editor = ({ fileId,projectId }) => {
+export const Editor = ({ fileId,project }) => {
+  const projectId=project._id
   const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone} = useFileStore();
   const {authUser}=useAuthStore()
   const [code, setCode] = useState("// Write your code here\n");
@@ -32,7 +33,7 @@ export const Editor = ({ fileId,projectId }) => {
   }, [fileId, getFile]);
   
   const cloneFile=async()=>{
-    const clone=await getClone({fileId:fileId, userId:authUser._id})
+    const clone=await getClone({fileId:fileId})
     setCloneId(clone._id)
   }
 
@@ -117,7 +118,10 @@ export const Editor = ({ fileId,projectId }) => {
         <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500">{file.fileName}</h1>
         <div className="flex gap-2">
           <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer duration-300 ease-in" onClick={handleFork} disabled={isSaving}>Fork</button>
-          <NavLink to={`/pushRequests/file/${fileId}`} className="px-4 border-2 border-white rounded-xl text-white py-0.2 hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>
+          {
+            project.author!=authUser._id?
+            <NavLink to={`/pushRequests/file/${fileId}`} className="px-4 border-2 border-white rounded-xl text-white py-0.2 hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>:<></>
+          }
         </div>
       </div>
       <div className="bg-[#0d1117] px-2 pt-1 text-white text-sm flex gap-2">

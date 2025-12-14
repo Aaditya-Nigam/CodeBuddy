@@ -160,13 +160,17 @@ export const Repo=()=>{
                             <NavLink to={`/message/${id}`}>
                                 <TbMessage2Filled className="text-xl cursor-pointer max-[700px]:text-base max-[600px]:hidden"/>
                             </NavLink>
-                            <NavLink to={`/pushRequests/project/${project._id}`} className="px-4 border-2 border-white rounded text-white  hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>
+                            {
+                                project.author!=authUser._id?
+                                <NavLink to={`/pushRequests/project/${project._id}`} className="px-4 border-2 border-white rounded text-white  hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>:
+                                <NavLink to={`/admin/project/${project._id}`} className="px-4 border-2 border-white rounded text-white  hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Admin Panel</NavLink>
+                            }
                         </div>
                         <div className="grid grid-cols-[10fr_1fr] gap-4 justifycenter py-4">
                             <form>
                                 <input type="text" name="file" id="file" placeholder="Find files.." onChange={handleFileSearch} className="w-[600px] rounded-lg border-1 border-zinc-700 bg-[#1e2327] outline-none placeholder-zinc-600 text-zinc-400 px-2 py-1 text-sm w-full"/>    
                             </form>
-                            <NavLink to={`/new/${project?._id}/${parentFolder}/${folder?._id}`} className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer">New</NavLink>    
+                            <NavLink to={`/new/${project?._id}/${parentFolder}/${folder?._id}`} className="bg-sky-600 px-4 rounded-xl text-white flex items-center cursor-pointer justify-center">New</NavLink>    
                         </div> 
                         <div className="py-4 flex flex-col gap-2">
                             {

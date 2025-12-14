@@ -18,31 +18,20 @@ import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 
 export const CloneEditor = ({ fileId,projectId,cloneId }) => {
-  const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone} = useFileStore();
+  const {getFile, saveCloneFile, isSaving, createCloneFile, getClone} = useFileStore();
   const {authUser}=useAuthStore()
-  const [code, setCode] = useState("// Write your code here\n");
+  const [file, setFile] = useState(null);
+  const [code,setCode]=useState("// Write your code here\n")
 //   const [cloneId,setCloneId]=useState(null)
 
   useEffect(() => {
-    getFile({fileId: cloneId,ind:1});
-  }, [fileId, getFile]);
+    cloneFile()
+  },[cloneId]);
   
-//   const cloneFile=async()=>{
-//     if(editable==false){
-//       const clone=await getClone({fileId:fileId, userId:authUser._id})
-//       setCloneId(clone._id)
-//     }
-//   }
-
-  useEffect(() => {
-    if (file?.content && file.content !== code) {
-      setCode(file.content);
-    }
-  }, [file]);
-
-
-  if (isLoading) {
-    return <h1>Loading..</h1>;
+  const cloneFile=async()=>{
+    const clone=await getFile({fileId:cloneId,ind:1})
+    setFile(clone)
+    setCode(clone.content)
   }
 
   const handleSave=()=>{
@@ -52,12 +41,13 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
         language: file.language,
         content: code
       }
-      saveFile(fileId,formData)
+      saveCloneFile(cloneId,formData)
     } catch (error) {
       toast.error(error.message);
     }
   }
 
+  console.log(file)
 
   const langReq=(str)=>{
     if(str==='python'){
@@ -84,6 +74,21 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
     setCode(val);
   }
 
+  const extensions = [
+    basicSetup,
+    autocompletion(),
+    closeBrackets(),
+    indentUnit.of("    ")
+  ];
+
+  const langExtension = langReq(file?.language);
+  if (langExtension) extensions.unshift(langExtension);
+
+  if (!file) {
+    return <div className="text-white p-4">Loading editor...</div>;
+  }
+
+
   return (
     <>
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
@@ -106,7 +111,7 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
       </div>
       <CodeMirror
         value={code}
-        extensions={[langReq(file.language), basicSetup,autocompletion(),closeBrackets(),indentUnit.of("    ")]}
+        extensions={extensions}
         onChange={handleCodeChange}
         theme="dark"
         />

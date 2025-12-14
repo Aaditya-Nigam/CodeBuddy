@@ -144,7 +144,7 @@ const getCloneFile=async (req,res)=>{
         const userId=req.user._id
         const file=await CloneFile.findOne({originalFileId: fileId, userId: userId})
         if(!file){
-            res.status(201).json(null)
+            res.status(201).json(null) 
             return ;
         }
         res.status(201).json(file)
@@ -154,11 +154,37 @@ const getCloneFile=async (req,res)=>{
     }
 }
 
+const updateCloneFile=async (req,res)=>{
+    try {
+        const {id}=req.params
+        const {fileName,content,language}=req.body
+        if(!fileName || !language || !content){
+            res.status(401).json({message: "Fields are missing!!"})
+            return ;
+        }
+        const file=await CloneFile.findById(id);
+        if(!file){
+            res.status(401).json({message: "No such file exists!!"});
+            return ;
+        }
+        const updatedFile=await CloneFile.findByIdAndUpdate(id, {fileName,content,language}, {new:true})
+        if(!updateFile){
+            res.status(401).json({message: "Internal server error!!"})
+            return ;
+        }
+        res.status(201).json(updatedFile)
+    } catch (error) {
+        res.status(401).json({message: "Internal server error!!"})
+        console.log("error in update file controller: ",error.message)
+    }
+}
+
 module.exports={
     createFile,
     updateFile,
     getFile,
     deleteFile,
     createCloneFile,
-    getCloneFile
+    getCloneFile,
+    updateCloneFile
 }
