@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useAuthStore } from "../store/useAuthStore"
 import { Toaster } from "react-hot-toast"
 import { usePushPullStore } from "../store/usePushPullStore"
+import { useFileStore } from "../store/useFileStore"
 
 export const PushRequest=()=>{
 
@@ -11,19 +12,30 @@ export const PushRequest=()=>{
         title: "",
         description: ""
     })
+    const [clone,setClone]=useState(null)
     const {createPushRequest}=usePushPullStore()
-    const {authUser}=useAuthStore()
+    const {getFile}=useFileStore()
     const navigate=useNavigate()
+
+    useEffect(()=>{
+        fetchData()
+    },[])
+
+    const fetchData=async ()=>{
+        const res=await getFile({fileId: cloneId,ind:1})
+        setClone(res);
+    }
+    console.log(clone)
 
     const handleSubmit=async (e)=>{
         e.preventDefault()
         const formData={
             title: data.title,
             description: data.description,
-            userId: authUser._id,
             fileId,
             cloneId,
-            projectId
+            projectId,
+            content: clone.content
         }
         const res=await createPushRequest(formData)
         console.log(res)

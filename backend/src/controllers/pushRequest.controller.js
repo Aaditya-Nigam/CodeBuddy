@@ -6,16 +6,13 @@ const PushRequest = require("../models/pushRequest.model")
 
 const createPushRequest=async(req,res)=>{
     try {
-        const {title,description,userId,projectId,fileId,cloneId}=req.body
-        if(!userId | !title | !description){
+        const {title,description,projectId,fileId,cloneId,content,base}=req.body
+        const userId=req.user._id
+        if(!userId || !title || !description || !content || !projectId || !fileId || !cloneId){
             res.status(401).json({message: "Fields are missing!"})
             return ;
         }
         const user=await User.findById(userId)
-        if(!user){
-            res.status(401).json({message: "User not defined!"})
-            return ;
-        }
         const project=await Project.findById(projectId)
         if(!project){
             res.status(401).json({message: "Project not defined!"})
@@ -37,7 +34,8 @@ const createPushRequest=async(req,res)=>{
             projectId: projectId,
             title,
             description,
-            userId 
+            userId ,
+            content
         })
         await push.save()
         res.status(201).json(push)
@@ -107,7 +105,7 @@ const getAllAdminRequests=async (req,res)=>{
 const getRequest=async (req,res)=>{
     try {
         const {requestId}=req.params
-        const request=await PushRequest.findById(requestId).populate({path: "originalFileId"}).populate({path: "userId"})
+        const request=await PushRequest.findById(requestId).populate({path: "originalFileId"}).populate({path: "userId"}).populate({path: "cloneFileId"})
         if(!request){
             res.status(401).json({message: "invalid requestId!"})
             return ;

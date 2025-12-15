@@ -106,8 +106,9 @@ const deleteFile=async (req,res)=>{
 
 const createCloneFile=async (req,res)=>{
     try {
-        const {fileId,userId}=req.body
-        if(!fileId || !userId){
+        const {fileId,base}=req.body
+        const userId=req.user._id
+        if(!fileId || !userId || !base){
             res.status(401).json({message: "Fields are missing!"})
             return 
         }
@@ -127,7 +128,8 @@ const createCloneFile=async (req,res)=>{
             content: original.content,
             language: original.language,
             projectId: original.projectId,
-            userId: userId
+            userId: userId,
+            base: base
         })
         await cloneFile.save()
         // console.log(cloneFile)

@@ -9,6 +9,7 @@ export const ViewOriginalVsChange=()=>{
     const {requestId}=useParams()
     const [original,setOriginal]=useState("")
     const [changed,setChanged]=useState("")
+    const [base,setBase]=useState("")
     const [request,setRequest]=useState(null)
     const {getRequest}=usePushPullStore()
     const navigate=useNavigate()
@@ -22,6 +23,7 @@ export const ViewOriginalVsChange=()=>{
         setRequest(res)
         setOriginal(res.originalFileId.content)
         setChanged(res.content)
+        setBase(res.cloneFileId.base)
     }
 
     return (
@@ -44,7 +46,16 @@ export const ViewOriginalVsChange=()=>{
                     <p className="border-2 border-zinc-700 bg-[#6699ff0b] px-4 rounded-lg">{request?.description}</p>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
+                <div className="border-2 border-zinc-700 bg-[#010409] rounded-xl text-white p-4 flex flex-col gap-4">
+                    <h1 className="text-center text-2xl text-zinc-400"><u>Base File</u></h1>                
+                    <CodeMirror
+                        value={base}
+                        theme="dark"
+                        editable={false}
+                        className="rounded-xl overflow-hidden"
+                        />
+                </div>
                 <div className="border-2 border-zinc-700 bg-[#010409] rounded-xl text-white p-4 flex flex-col gap-4">
                     <h1 className="text-center text-2xl text-zinc-400"><u>Original File</u></h1>                            
                     <CodeMirror

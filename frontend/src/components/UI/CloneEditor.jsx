@@ -15,13 +15,14 @@ import { indentUnit } from "@codemirror/language";
 import { useFileStore } from "../../store/useFileStore";
 import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export const CloneEditor = ({ fileId,projectId,cloneId }) => {
   const {getFile, saveCloneFile, isSaving, createCloneFile, getClone} = useFileStore();
   const {authUser}=useAuthStore()
   const [file, setFile] = useState(null);
   const [code,setCode]=useState("// Write your code here\n")
+  const navigate=useNavigate()
 //   const [cloneId,setCloneId]=useState(null)
 
   useEffect(() => {
@@ -74,6 +75,11 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
     setCode(val);
   }
 
+  const handlePushClick=async()=>{
+    await handleSave()
+    navigate(`/push/${projectId}/${fileId}/${cloneId}`)
+  }
+
   const extensions = [
     basicSetup,
     autocompletion(),
@@ -94,7 +100,7 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
         <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500">{file.fileName}</h1>
         <div className="flex gap-2">
-            <NavLink to={`/push/${projectId}/${fileId}/${cloneId}`} className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer">Push</NavLink>
+            <button to={`/push/${projectId}/${fileId}/${cloneId}`} className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handlePushClick}>Push</button>
             <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handleSave} disabled={isSaving}>{isSaving?'Saving':'Save'}</button>
         </div>
       </div>

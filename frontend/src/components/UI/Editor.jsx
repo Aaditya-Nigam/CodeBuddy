@@ -59,24 +59,11 @@ export const Editor = ({ fileId,project }) => {
     return <h1>Loading..</h1>;
   }
 
-  const handleSave=()=>{
-    try {
-      const formData={
-        fileName: file.fileName,
-        language: file.language,
-        content: code
-      }
-      saveFile(fileId,formData)
-    } catch (error) {
-      toast.error(error.message);
-    }
-  }
-
   const handleFork=async ()=>{
     try {
       const formData={
         fileId: fileId,
-        userId: authUser._id
+        base: code
       }
       const clone=await createCloneFile(formData)
       setCloneId(clone._id)
