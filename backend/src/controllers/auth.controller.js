@@ -76,6 +76,7 @@ const authSignIn=async (req,res)=>{
             profilePic: user.profilePic,
             projects: user.projects,
             skills: user.skills,
+            _id: user._id
         })
     } catch (error) {
         res.status(401).json({message: "Internal server error!!"});

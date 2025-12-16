@@ -44,8 +44,12 @@ export const Repo=()=>{
     },[authUser])
     
     useEffect(()=>{
-        loadProject(id);
+        fetchData()
     },[])
+    
+    const fetchData=async()=>{
+        await loadProject(id); 
+    }
 
     useEffect(()=>{
         if(project){ 
@@ -86,6 +90,8 @@ export const Repo=()=>{
         })
         setFiles(updatedList)
     }
+    console.log(project)
+    console.log(authUser)
 
     return (
         <>
@@ -161,7 +167,7 @@ export const Repo=()=>{
                                 <TbMessage2Filled className="text-xl cursor-pointer max-[700px]:text-base max-[600px]:hidden"/>
                             </NavLink>
                             {
-                                project.author!=authUser._id?
+                                project?.author!=authUser?._id?
                                 <NavLink to={`/pushRequests/project/${project._id}`} className="px-4 border-2 border-white rounded text-white  hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>:
                                 <NavLink to={`/admin/project/${project._id}`} className="px-4 border-2 border-white rounded text-white  hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Admin Panel</NavLink>
                             }
