@@ -76,5 +76,29 @@ export const usePushPullStore=create((set,get)=>({
             console.log("Error in getRequest: ",error)
             toast.error(error.response.data.message)
         }
+    },
+
+    mergePullRequest: async(requestId)=>{
+        try {
+            const res=await axiosInstance.post(`/push/mergePullRequest/${requestId}`)
+            const data=res.data
+            return data;
+        } catch (error) {
+            console.log("Error in mergePullRequest usePullPushStore: ",error)
+            toast.error(error.response.data.message)
+        }
+    },
+
+    mergeConflict: async(requestId,formData)=>{
+        try {
+            const res=await axiosInstance.post(`/push/mergeConflict/${requestId}`,formData)
+            const data=res.data
+            toast.success(data.message);
+            return true
+        } catch (error) {
+            console.log("Error in mergeConflict usePushPullStore: ",error)
+            toast.error(error.response.data.message)
+            return false
+        }
     }
 }))

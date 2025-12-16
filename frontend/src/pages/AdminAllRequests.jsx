@@ -40,10 +40,14 @@ export const AdminAllRequests=()=>{
                                         <p className="text-zinc-500">Title: <span className="text-zinc-700">{item.title}</span></p>
                                         <p className="text-zinc-500">Description: <span className="text-zinc-700">{item.description}</span></p>
                                     </div>
-                                    <div className="flex flex-col gap-3 text-white">
-                                        <NavLink to={`/merge/${item._id}`} className="border-2 border-green-700 px-6 py-0.5 rounded bg-green-700 hover:border-white duration-200 ease-in cursor-pointer">Accept</NavLink>
-                                        <button className="border-2 px-6 py-0.5 rounded hover:border-rose-900 duration-200 ease-in cursor-pointer">Reject</button>
-                                    </div>
+                                    {
+                                        item.status=='Pending'?
+                                        <div className="flex flex-col gap-3 text-white">
+                                            <NavLink to={`/merge/${item._id}`} className="border-2 border-green-700 px-6 py-0.5 rounded bg-green-700 hover:border-white duration-200 ease-in cursor-pointer">Accept</NavLink>
+                                            <button className="border-2 px-6 py-0.5 rounded hover:border-rose-900 duration-200 ease-in cursor-pointer">Reject</button>
+                                        </div>:
+                                        <p className="pr-4">{item.status}</p>
+                                    }
                                 </div>
                             )
                         })

@@ -1,0 +1,12 @@
+#include<bits/stdc++.h>
+
+<<<<<<< C:\Users\aadit\OneDrive\Desktop\Mern\CodeBuddy\backend\tmp\pr.txt
+    int main(){
+        cout<<"hii";
+        return 0;
+    }
+=======
+void main(){
+  return 1;
+}
+>>>>>>> C:\Users\aadit\OneDrive\Desktop\Mern\CodeBuddy\backend\tmp\curr.txt
