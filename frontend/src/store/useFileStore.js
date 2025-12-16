@@ -7,6 +7,7 @@ export const useFileStore=create((set)=> ({
     isLoading: true,
     isSaving: false,
     isCreatingFile: false,
+    isLoadingClone: true,
 
     createFile: async(formData)=>{
         set({isCreatingFile: true});
@@ -73,6 +74,8 @@ export const useFileStore=create((set)=> ({
             console.log("Error in getClone useFileStore: ",error)
             toast.error(error.response.data.message)
             return null;
+        }finally{
+            set({isLoadingClone: false});
         }
     },
 

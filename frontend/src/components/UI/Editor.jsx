@@ -19,13 +19,11 @@ import { NavLink } from "react-router-dom";
 
 export const Editor = ({ fileId,project }) => {
   const projectId=project._id
-  const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone} = useFileStore();
+  const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone, isLoadingClone} = useFileStore();
   const {authUser}=useAuthStore()
   const [code, setCode] = useState("// Write your code here\n");
   const [cloneId,setCloneId]=useState(null)
-  // const {socket}=useAuthStore();
 
-  console.log(fileId)
   useEffect(() => {
       getFile({fileId,ind:0});
 
@@ -34,7 +32,9 @@ export const Editor = ({ fileId,project }) => {
   
   const cloneFile=async()=>{
     const clone=await getClone({fileId:fileId})
-    setCloneId(clone._id)
+    if(clone){
+      setCloneId(clone._id)
+    }
   }
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const Editor = ({ fileId,project }) => {
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
         <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500">{file.fileName}</h1>
         <div className="flex gap-2">
-          <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer duration-300 ease-in" onClick={handleFork} disabled={isSaving}>Fork</button>
+          <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer duration-300 ease-in disabled:bg-zinc-600 disabled:cursor-not-allowed" onClick={handleFork} disabled={isLoadingClone || cloneId}>Fork</button>
           {
             project.author!=authUser._id?
             <NavLink to={`/pushRequests/file/${fileId}`} className="px-4 border-2 border-white rounded-xl text-white py-0.2 hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>:<></>
