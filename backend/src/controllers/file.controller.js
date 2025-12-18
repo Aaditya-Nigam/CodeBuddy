@@ -122,6 +122,11 @@ const createCloneFile=async (req,res)=>{
             res.status(401).json({message: "User is missing!"})
             return 
         }
+        const project=await Project.findById(original.projectId)
+        if(String(project.author)==String(userId)){
+            res.status(401).json({message: "Author can't fork a file!"})
+            return ;
+        }
         const cloneFile=await CloneFile({
             originalFileId: fileId,
             fileName: original.fileName,

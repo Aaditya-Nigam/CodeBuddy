@@ -62,6 +62,7 @@ export const useFileStore=create((set)=> ({
             return data
         } catch (error) {
             console.log("Error in useFileStore createCloneFile: ",error)
+            toast.error(error.response.data.message)
         }
     }, 
 
