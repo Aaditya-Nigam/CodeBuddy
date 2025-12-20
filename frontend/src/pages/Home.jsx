@@ -25,8 +25,8 @@ export const Home=()=>{
                 <div className="flex justify-center pt-4">
                     <p className="bg-[#d9baef] text-[#5c207a] px-4 rounded-2xl text-sm">Version 3.0.0</p>
                 </div>
-                <div className="py-4 px-8 flex justify-center items-center gap-8 max-[800px]:flex-col">
-                    <div className="flex flex-col gap-8 max-[800px]:order-2">
+                <div className="py-4 px-8 flex flex-col justify-center items-center gap-8 max-[800px]:flex-col">
+                    {/* <div className="flex flex-col gap-8 max-[800px]:order-2">
                         <div className="flex flex-col gap-2 text-7xl max-[1050px]:text-5xl max-[800px]:items-center">
                             <p>'Collaborate.</p>
                             <p>&nbsp;Code.</p>
@@ -38,7 +38,20 @@ export const Home=()=>{
                             <NavLink to={"/projects"} className="bg-sky-600 px-4 py-0.5 rounded hover:bg-sky-700">Join Project</NavLink>
                         </div>
                     </div>
-                    <img src="/moon.png" alt="moon" className="h-[500px] max-[1050px]:h-[350px] max-[800px]:order-1"/>
+                    <img src="/moon.png" alt="moon" className="h-[500px] max-[1050px]:h-[350px] max-[800px]:order-1"/> */}
+                    <img src="/codeBuddy_full.png" alt="codeBuddy" className="w-[700px] drop-shadow-sm drop-shadow-[#ffffff]"/>
+                    <div className="flex flex-col gap-8 max-[800px]:order-2 items-center">
+                        <div className="flex flex-col gap-2 text-7xl max-[1050px]:text-5xl max-[800px]:items-center">
+                            <p>'Collaborate.&nbsp;Code.&nbsp;Create.'</p>
+                            {/* <p>&nbsp;Code.</p> */}
+                            {/* <p>&nbsp;Create.'</p> */}
+                        </div>
+                        <p className="text-2xl max-[800px]:text-xl">Join coding sessions, and build together in real-time</p>
+                        <div className="flex gap-4 justify-center text-xl max-[800px]:text-base">
+                            <NavLink to={"/projects"} className="bg-sky-600 px-4 py-0.5 rounded hover:bg-sky-700">Create Project</NavLink>
+                            <NavLink to={"/projects"} className="bg-sky-600 px-4 py-0.5 rounded hover:bg-sky-700">Join Project</NavLink>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="w-[80%] mx-auto grid grid-cols-[3fr_1fr] gap-8 py-8  items-center max-[850px]:flex max-[850px]:flex-col max-[850px]:gap-0">
