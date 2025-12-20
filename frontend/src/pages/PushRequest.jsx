@@ -66,7 +66,7 @@ export const PushRequest=()=>{
                         </div>
                         <div className="grid grid-cols-2 gap-3 w-full text-lg">
                             <input type="submit" value="Push" className="bg-green-600 rounded-lg py-1 cursor-pointer hover:bg-green-700 duration-100 ease-in"/>
-                            <input type="button" value="Cancel Commit" className="rounded-lg py-1 border-1 border-[#ffffff25] cursor-pointer hover:bg-white hover:text-black duration-200 ease-in"/>
+                            <input type="button" value="Cancel Commit" className="rounded-lg py-1 border-1 border-[#ffffff25] cursor-pointer hover:bg-white hover:text-black duration-200 ease-in" onClick={()=> navigate(-1)}/>
                         </div>
                     </form>
                 </div>
