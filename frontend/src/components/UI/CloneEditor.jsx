@@ -16,6 +16,7 @@ import { useFileStore } from "../../store/useFileStore";
 import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export const CloneEditor = ({ fileId,projectId,cloneId }) => {
   const {getFile, saveCloneFile, isSaving, createCloneFile, getClone} = useFileStore();
@@ -98,7 +99,7 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
   return (
     <>
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
-        <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500">{file.fileName}</h1>
+        <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500 flex gap-2 items-center"><FaArrowLeft className="cursor-pointer" onClick={()=> navigate(-1)}/>{file.fileName}</h1>
         <div className="flex gap-2">
             <button to={`/push/${projectId}/${fileId}/${cloneId}`} className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handlePushClick}>Push</button>
             <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handleSave} disabled={isSaving}>{isSaving?'Saving':'Save'}</button>

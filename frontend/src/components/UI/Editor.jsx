@@ -11,11 +11,12 @@ import { basicSetup } from "codemirror";
 import { autocompletion, closeBrackets } from "@codemirror/autocomplete"; 
 import { indentUnit } from "@codemirror/language"; 
 // import { bracketMatching } from "codemirror/matchbrackets"; 
+import { FaArrowLeft } from "react-icons/fa6";
 
 import { useFileStore } from "../../store/useFileStore";
 import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export const Editor = ({ fileId,project }) => {
   const projectId=project._id
@@ -23,6 +24,7 @@ export const Editor = ({ fileId,project }) => {
   const {authUser}=useAuthStore()
   const [code, setCode] = useState("// Write your code here\n");
   const [cloneId,setCloneId]=useState(null)
+  const navigate=useNavigate()
 
   useEffect(() => {
       getFile({fileId,ind:0});
@@ -114,7 +116,7 @@ export const Editor = ({ fileId,project }) => {
   return (
     <>
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
-        <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500">{file.fileName}</h1>
+        <h1 className="text-lg font-normal py- border-[#1e232795] text-zinc-500 flex gap-2 items-center"><FaArrowLeft className="cursor-pointer" onClick={()=> navigate(-1)}/>{file.fileName}</h1>
           {
             project.author!=authUser._id?
             <div className="flex gap-2">

@@ -23,6 +23,7 @@ import {useFolderStore} from "../store/useFolderStore";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { ImFilesEmpty } from "react-icons/im";
 import { Welcome } from "../components/loaders/Welcome";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export const Repo=()=>{
 
@@ -156,7 +157,7 @@ export const Repo=()=>{
                     {/* right */}
                     <div className="fileContainer py-4 px-8 w-full text-white overflow-auto">
                         <div className="flex gap-4 items-center max-[520px]:flex-col">
-                            <h1 className="text-2xl underline max-[700px]:text-xl">{project.projectName}</h1>
+                            <h1 className="text-2xl underline max-[700px]:text-xl flex gap-2 items-center"><FaArrowLeft className="cursor-pointer" onClick={()=> navigate(-1)}/>{project.projectName}</h1>
                             <div className="flex gap-8 items-center bg-[#1e2327] px-2 py-1 border-1 border-zinc-700 rounded max-[700px]:gap-4">
                                 <p className="text-sm max-[700px]:text-xs">{project._id}</p>
                                 {
