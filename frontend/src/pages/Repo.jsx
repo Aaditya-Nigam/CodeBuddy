@@ -22,7 +22,7 @@ import { Loader } from "../components/UI/Loader";
 import {useFolderStore} from "../store/useFolderStore";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { ImFilesEmpty } from "react-icons/im";
-import { Welcome } from "../components/loaders/welcome";
+import { Welcome } from "../components/loaders/Welcome";
 
 export const Repo=()=>{
 

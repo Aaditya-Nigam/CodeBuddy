@@ -75,6 +75,17 @@ export const useAuthStore=create((set,get)=>({
         }
     },
 
+    updateSkill: async(data)=>{
+        try {
+            const res=await axiosInstance.post('/auth/update-skills',data)
+            set({authUser: res.data})
+            toast.success('Skill added!')
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+    },
+
     createProject: async(formData)=>{
         set({isCreatingProject: true})
         try {

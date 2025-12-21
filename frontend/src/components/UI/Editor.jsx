@@ -13,11 +13,13 @@ import { indentUnit } from "@codemirror/language";
 // import { bracketMatching } from "codemirror/matchbrackets"; 
 
 import { useFileStore } from "../../store/useFileStore";
+import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 
 export const Editor = ({ fileId }) => {
   const { file, isLoading, getFile, saveFile, isSaving} = useFileStore();
   const [code, setCode] = useState("// Write your code here\n");
+  const {socket}=useAuthStore();
 
   useEffect(() => {
     if (fileId) {
@@ -30,6 +32,18 @@ export const Editor = ({ fileId }) => {
       setCode(file.content);
     }
   }, [file]);
+
+  // useEffect(()=>{
+  //   socket.emit("joinRoom", {fileId});
+
+  //   socket.on("codeUpdate", (code)=>{
+  //     setCode(code);
+  //   })
+
+  //   return ()=>{
+  //     socket.off("codeUpdate")
+  //   }
+  // },[fileId])
 
   if (isLoading) {
     return <h1>Loading..</h1>;
@@ -69,6 +83,11 @@ export const Editor = ({ fileId }) => {
     }
   }
 
+  const handleCodeChange=(val)=>{
+    setCode(val);
+    socket.emit("codeChange", {fileId,code: val});
+  }
+
   return (
     <>
       <div className="flex items-center justify-between px-4 py-1 border-b-1 border-zinc-700">
@@ -78,7 +97,7 @@ export const Editor = ({ fileId }) => {
       <CodeMirror
         value={code}
         extensions={[langReq(file.language), basicSetup,autocompletion(),closeBrackets(),indentUnit.of("    ")]}
-        onChange={(val) => setCode(val)}
+        onChange={handleCodeChange}
         theme="dark"
         />
         <Toaster/>
