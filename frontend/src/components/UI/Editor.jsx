@@ -12,13 +12,14 @@ import { autocompletion, closeBrackets } from "@codemirror/autocomplete";
 import { indentUnit } from "@codemirror/language"; 
 // import { bracketMatching } from "codemirror/matchbrackets"; 
 import { FaArrowLeft } from "react-icons/fa6";
+import { BsStars } from "react-icons/bs";
 
 import { useFileStore } from "../../store/useFileStore";
 import { useAuthStore } from "../../store/useAuthStore"
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
 
-export const Editor = ({ fileId,project }) => {
+export const Editor = ({ fileId,project,input }) => {
   const projectId=project._id
   const { file, isLoading, getFile, saveFile, isSaving, createCloneFile, getClone, isLoadingClone} = useFileStore();
   const {authUser}=useAuthStore()
@@ -123,7 +124,9 @@ export const Editor = ({ fileId,project }) => {
               <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer duration-300 ease-in disabled:bg-zinc-600 disabled:cursor-not-allowed" onClick={handleFork} disabled={isLoadingClone || cloneId}>Fork</button>
               <NavLink to={`/pushRequests/file/${fileId}`} className="px-4 border-2 border-white rounded-xl text-white py-0.2 hover:bg-white hover:text-black cursor-pointer duration-300 ease-in font-semibold">Push Requests</NavLink>
             </div>:
-            <div>
+            <div className="flex gap-2">
+              <button className="bg-green-700 px-4 py-0.5 rounded-xl text-white hover:bg-green-900 cursor-pointer" onClick={()=> console.log(input)}>Run</button>
+              <button className="bg-[#010409] px-4 py-0.5 rounded-xl text-white hover:bg-white hover:text-black cursor-pointer flex gap-1 items-center"><BsStars/>Analyse</button>
               <button className="bg-sky-500 px-4 py-0.5 rounded-xl text-white hover:bg-sky-600 cursor-pointer" onClick={handleSave} disabled={isSaving}>{isSaving?'Saving':'Save'}</button>
             </div>
           }
