@@ -37,7 +37,6 @@ export const Repo=()=>{
     const [files,setFiles]=useState([]);
     const [folders,setFolders]=useState([]);
     const navigate=useNavigate();
-    // console.log(folderID)
     useEffect(()=>{
         if(!authUser){
             navigate("/login")
@@ -91,8 +90,6 @@ export const Repo=()=>{
         })
         setFiles(updatedList)
     }
-    console.log(project)
-    console.log(authUser)
 
     return (
         <>

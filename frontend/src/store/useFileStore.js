@@ -26,8 +26,6 @@ export const useFileStore=create((set)=> ({
 
     getFile: async({fileId,ind})=>{
         try {
-            console.log(fileId)
-            console.log(ind)
             const res=await axiosInstance.get(`/file/file/${fileId}/${ind}`)
             const data=res.data;
             set({file: data})
@@ -102,6 +100,7 @@ export const useFileStore=create((set)=> ({
             console.log(cloneId)
             const res=await axiosInstance.post(`/file/cloneFile/sync/${id}/${cloneId}`)
             const data=res.data;
+            return data
         }catch(error){
             toast.error(error.response.data.message);
             console.log(error.message)

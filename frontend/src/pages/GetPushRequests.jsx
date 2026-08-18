@@ -17,9 +17,7 @@ export const GetPushRequests=()=>{
     const fetchRequests=async ()=>{
         const res=await getPushRequests(fileId);
     }
-    console.log(requests)
 
-    console.log(fileId)
     return (
         <main className="bg-[#0d1117] min-h-[91.7vh] flex justify-center items-center">
             <div className="w-[60%] p-4 min-h-[91.7vh] flex flex-col gap-6">

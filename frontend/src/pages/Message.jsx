@@ -16,7 +16,6 @@ export const Message=()=>{
     const {authUser,socket}=useAuthStore()
     const [msg,setMsg]=useState("");
     const [reload,setReload]=useState(false)
-    console.log(messages)
 
 
     useEffect(()=>{
@@ -40,7 +39,6 @@ export const Message=()=>{
     const handleMessageSend=(e)=>{
         e.preventDefault();
         try {
-            console.log(msg)
             const check=checkFormData();
             if(check){
                 sendMessage(projectId,msg);
@@ -49,7 +47,6 @@ export const Message=()=>{
             }
         } catch (error) {
             toast.error(error.message)
-            console.log(error)
         }
     }
 

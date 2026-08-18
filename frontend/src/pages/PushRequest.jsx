@@ -25,7 +25,6 @@ export const PushRequest=()=>{
         const res=await getFile({fileId: cloneId,ind:1})
         setClone(res);
     }
-    console.log(clone)
 
     const handleSubmit=async (e)=>{
         e.preventDefault()
@@ -38,7 +37,6 @@ export const PushRequest=()=>{
             content: clone.content
         }
         const res=await createPushRequest(formData)
-        console.log(res)
         if(res){
             setData({
                 title: "",

@@ -31,7 +31,6 @@ export const JoinProject=()=>{
             })
         }
     }
-    // console.log(authUser)
 
     return (
         <div className={` text-white bg-[#0d1117] w-screen min-h-[81.7vh] flex flex-col gap-4 justify-center items-center`}>

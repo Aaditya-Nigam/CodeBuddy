@@ -27,8 +27,6 @@ export const NewTask=({showNewTasks,setShowNewTasks,collaborators,id})=>{
     const handleFormSubmit=(e)=>{
         e.preventDefault()
         const check=chechFormData();
-        console.log(check)
-        console.log(task)
         if(check){
             createTask(task,id)
             setTask({

@@ -69,7 +69,6 @@ export const Editor = ({ fileId,project }) => {
       }
       const clone=await createCloneFile(formData)
       setCloneId(clone._id)
-      console.log(clone)
     } catch (error) {
     }
   }

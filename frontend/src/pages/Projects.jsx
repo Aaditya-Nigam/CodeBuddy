@@ -25,12 +25,10 @@ export const Projects=()=>{
 
 
     const handleProjectSearch=(e)=>{
-        console.log(e.target.value)
         const updatedList=authUser.projects.filter((project)=>{
             return project.projectName.toLowerCase().includes(e.target.value.toLowerCase());
         })
         setProjects(updatedList)
-        console.log(updatedList)
     }
 
     const handleProjectDelete=async (id)=>{

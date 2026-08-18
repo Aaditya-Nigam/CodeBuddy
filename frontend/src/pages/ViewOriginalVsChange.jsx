@@ -46,7 +46,6 @@ export const ViewOriginalVsChange=()=>{
             data: conflict
         }
         const res=await mergeConflict(requestId,formData)
-        console.log(formData)
         if(res){
             setTimeout(()=>{
                 navigate(-1);

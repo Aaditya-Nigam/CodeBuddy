@@ -50,7 +50,6 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
     }
   }
 
-  console.log(file)
 
   const langReq=(str)=>{
     if(str==='python'){
@@ -97,7 +96,9 @@ export const CloneEditor = ({ fileId,projectId,cloneId }) => {
   }
 
   const handleSyncCode=async()=>{
-    await handleSync(fileId,cloneId)
+    const res=await handleSync(fileId,cloneId)
+    setFile(res);
+    handleCodeChange(res.content)
   }
 
 
