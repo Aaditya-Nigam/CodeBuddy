@@ -100,5 +100,15 @@ export const usePushPullStore=create((set,get)=>({
             toast.error(error.response.data.message)
             return false
         }
+    },
+
+    rejectRequest: async(requestId)=>{
+        try {
+            const res=await axiosInstance.get(`/push/reject/${requestId}`)
+            const data=res.data
+        } catch (error) {
+            console.log("Error in rejectRequest usePushPullStore: ",error)
+            toast.error(error.response.data.message)
+        }
     }
 }))

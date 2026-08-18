@@ -50,3 +50,4 @@ dump/
 npm-debug.log
 yarn-error.log
 backend/.env
+backend/temp/

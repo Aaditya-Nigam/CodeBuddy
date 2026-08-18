@@ -122,13 +122,13 @@ export const Repo=()=>{
                             <div className="text-xl border-b-2 py-2 border-[#1e232795] flex justify-between items-center">
                                 <h1 >Tasks</h1>
                                 <div className="flex items-center gap-2">
-                                    <FaPlusSquare className="text-sm" onClick={()=>setShowNewTasks(true)}/>
+                                    <FaPlusSquare className="text-sm cursor-pointer" onClick={()=>setShowNewTasks(true)}/>
                                     {
                                         showTasks?<IoIosArrowDown className="text-sm cursor-pointer" onClick={()=> setShowTasks(false)}/>:<IoIosArrowUp className="text-sm cursor-pointer" onClick={()=> setShowTasks(true)}/>
                                     }  
                                 </div>
                             </div>
-                            <div className={`flex flex-col gap-2 max-h-[300px] overflow-auto taskContainer ${showTasks? '':'hidden'}`}>
+                            <div className={`flex flex-col gap-2 max-h-[400px] overflow-auto taskContainer ${showTasks? '':'hidden'}`}>
                                 {
                                     project.tasks.map((task,idx)=>{
                                         return (
@@ -137,7 +137,10 @@ export const Repo=()=>{
                                                     {
                                                         task.completed?<h1 className="text-sm line-through text-green-500 ">{task.title}</h1>:<h1 className="text-sm w-full">{task.title}</h1>
                                                     }
-                                                    <p className="text-xs text-zinc-500 w-full">{task.author}</p>
+                                                    <div className="flex flex-col">
+                                                        <p className="text-xs text-zinc-500 w-full">{task.author}</p>
+                                                        <p className="text-xs text-zinc-500 w-full">Deadline: {moment(task.deadline).fromNow()}</p>
+                                                    </div>
                                                 </div>
                                                 <div className="flex gap-2 items-center">
                                                     {

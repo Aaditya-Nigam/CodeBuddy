@@ -62,7 +62,7 @@ export const Profile=()=>{
                         </label>
                         <input type="file" name="profile" id="profile" onChange={handleProfileChange} className="hidden" disabled={isUpdatingImage}/>
                     </div>
-                    <button className="bg-rose-700 px-4 py-1 rounded-3xl text-white mb-4 max-[650px]:text-sm" onClick={async ()=> await logout()} disabled={isUpdatingImage}>Logout</button>
+                    <button className="bg-rose-700 px-4 py-1 rounded-3xl text-white mb-4 max-[650px]:text-sm cursor-pointer" onClick={async ()=> await logout()} disabled={isUpdatingImage}>Logout</button>
                     <div className="flex flex-col gap-4 w-fit">
                         <div className="flex gap-4 text-white">
                             <p className="text-zinc-400 text-lg max-[650px]:text-base">Full Name</p>

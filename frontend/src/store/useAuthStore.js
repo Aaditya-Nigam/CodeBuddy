@@ -28,7 +28,7 @@ export const useAuthStore=create((set,get)=>({
             return true;
         } catch (error) {
             set({authUser: null})
-            toast.error(error.message)
+            toast.error(error.response.data.message)
             set({isSigningUp: false})
             return false;
         }
@@ -45,7 +45,7 @@ export const useAuthStore=create((set,get)=>({
             get().connectSocket();
             return true;
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.response.data.message)
             set({isLoggingIn: false})
             return false;
         }

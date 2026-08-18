@@ -186,6 +186,27 @@ const updateCloneFile=async (req,res)=>{
     }
 }
 
+const syncFile=async (req,res)=>{
+    try{
+        const {id,cloneId}=req.params
+        const file=await File.findById(id)
+        if(!file){
+            res.status(401).json({message: "File donesn't exits!!"})
+            return ;
+        }
+        const cloneFile=await CloneFile.findById(cloneId)
+        if(!cloneFile){
+            res.status(401).json({message: "Fork doesn't exists!!"})
+            return ;
+        }
+        const updateFile=await CloneFile.findByIdAndUpdate(cloneId, {content: file.content, base: file.content}, {new: true})
+        res.status(201).json(updateFile)
+    }catch(error){
+        res.status(401).json({message: "Internal server error!!"})
+        console.log("error in update file controller: ",error.message)
+    }
+}
+
 module.exports={
     createFile,
     updateFile,
@@ -193,5 +214,6 @@ module.exports={
     deleteFile,
     createCloneFile,
     getCloneFile,
-    updateCloneFile
+    updateCloneFile,
+    syncFile
 }

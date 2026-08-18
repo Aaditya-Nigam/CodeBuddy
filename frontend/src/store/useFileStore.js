@@ -94,4 +94,19 @@ export const useFileStore=create((set)=> ({
         }
     },
 
+    handleSync: async(id,cloneId)=>{
+        set({isSaving: true})
+        try{
+            console.log(id)
+            console.log(cloneId)
+            const res=await axiosInstance.post(`/file/cloneFile/sync/${id}/${cloneId}`)
+            const data=res.data;
+        }catch(error){
+            toast.error(error.response.data.message);
+            console.log(error.message)
+        }finally{
+            set({isSaving: false})
+        }
+    }
+
 }))

@@ -7,7 +7,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 export const AdminAllRequests=()=>{
     const {projectId}=useParams()
     const [requests,setRequests]=useState([])
-    const {getAllAdminRequests,deleteRequest}=usePushPullStore()
+    const {getAllAdminRequests,rejectRequest}=usePushPullStore()
     const navigate=useNavigate()
 
     useEffect(()=>{
@@ -17,6 +17,11 @@ export const AdminAllRequests=()=>{
     const fetchRequests=async ()=>{
         const res=await getAllAdminRequests(projectId);
         setRequests(res);
+    }
+
+    const handleReject=async(id)=>{
+        await rejectRequest(id)
+        fetchRequests()
     }
 
     return (
@@ -44,7 +49,7 @@ export const AdminAllRequests=()=>{
                                         item.status=='Pending'?
                                         <div className="flex flex-col gap-3 text-white">
                                             <NavLink to={`/merge/${item._id}`} className="border-2 border-green-700 px-6 py-0.5 rounded bg-green-700 hover:border-white duration-200 ease-in cursor-pointer">Accept</NavLink>
-                                            <button className="border-2 px-6 py-0.5 rounded hover:border-rose-900 duration-200 ease-in cursor-pointer">Reject</button>
+                                            <button className="border-2 px-6 py-0.5 rounded hover:border-rose-900 duration-200 ease-in cursor-pointer" onClick={()=> handleReject(item._id)}>Reject</button>
                                         </div>:
                                         <p className="pr-4">{item.status}</p>
                                     }

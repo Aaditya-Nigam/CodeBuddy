@@ -180,6 +180,22 @@ const mergeConflict=async (req,res)=>{
     }
 }
 
+const rejectRequest=async(req,res)=>{
+    try {
+        const {id}=req.params
+        const request=await PushRequest.findById(id)
+        if(!request){
+            res.status(401).json({message: "Request does not exists!"});
+            return ;
+        }
+        const updatedRequest=await PushRequest.findByIdAndUpdate(id, {status: "Rejected"}, {new: true})
+        res.status(201).json(updatedRequest)
+    } catch (error) {
+        console.log("Error in rejectRequest controller: ",error)
+        res.status(401).json({message: "Internal server error!"})
+    }
+}
+
 module.exports={
     createPushRequest,
     getPushRequests,
@@ -188,5 +204,6 @@ module.exports={
     getAllAdminRequests,
     getRequest,
     mergePullRequest,
-    mergeConflict
+    mergeConflict,
+    rejectRequest
 }

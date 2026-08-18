@@ -1,6 +1,6 @@
 const express=require("express")
 const protectedRoute = require("../middleware/auth.middleware")
-const {createPushRequest, getPushRequests, deleteRequest, getAllPushRequests, getAllAdminRequests, getRequest, mergePullRequest, mergeConflict} =require("../controllers/pushRequest.controller")
+const {createPushRequest, getPushRequests, deleteRequest, getAllPushRequests, getAllAdminRequests, getRequest, mergePullRequest, mergeConflict, rejectRequest} =require("../controllers/pushRequest.controller")
 const router=express.Router()
 
 router.post("/createPushRequest",protectedRoute,createPushRequest)
@@ -18,5 +18,7 @@ router.get("/getRequest/:requestId",protectedRoute,getRequest)
 router.post("/mergePullRequest/:requestId",protectedRoute,mergePullRequest)
 
 router.post("/mergeConflict/:requestId",protectedRoute,mergeConflict)
+
+router.get("/reject/:id",protectedRoute,rejectRequest)
 
 module.exports=router
