@@ -8,6 +8,7 @@ export const useFileStore=create((set)=> ({
     isSaving: false,
     isCreatingFile: false,
     isLoadingClone: true,
+    isSyncing: false,
 
     createFile: async(formData)=>{
         set({isCreatingFile: true});
@@ -95,7 +96,7 @@ export const useFileStore=create((set)=> ({
     },
 
     handleSync: async(id,cloneId)=>{
-        set({isSaving: true})
+        set({isSyncing: true})
         try{
             console.log(id)
             console.log(cloneId)
@@ -105,7 +106,7 @@ export const useFileStore=create((set)=> ({
             toast.error(error.response.data.message);
             console.log(error.message)
         }finally{
-            set({isSaving: false})
+            set({isSyncing: false})
         }
     }
 
